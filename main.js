@@ -156,8 +156,9 @@
       msg.className = "lab-msg " + cls; msg.textContent = t;
       val.textContent = Math.round(Math.min(rpm, 7500) / 50) * 50;
       setTacho(svg, rpm);
-      ev.textContent = kmh === 0 ? "Ton électrique, elle, est simplement à 0 tr/min, et ça ne la gêne pas."
-        : `Ton électrique à ${kmh} km/h : une seule vitesse, ~${(Math.round(kmh * 85 / 100) * 100).toLocaleString("fr-FR")} tr/min, et tout va bien.`;
+      const auto = kmh === 0 ? 0 : [5, 4, 3, 2].find(k => rpmFor(kmh, k) >= 1700) || 1;
+      ev.textContent = kmh === 0 ? "Ta boîte auto, en D, laissait le moteur tourner sans caler : c'est son convertisseur qui faisait le travail de l'embrayage."
+        : `À ${kmh} km/h, ta boîte auto aurait choisi la ${auto === 1 ? "1re" : auto + "e"} toute seule.${auto === g ? " Comme toi 👌" : ""}`;
     }
     $$("#labGears button").forEach(b => b.addEventListener("click", () => {
       g = +b.dataset.g; $$("#labGears button").forEach(x => x.classList.toggle("on", x === b)); upd();
@@ -219,8 +220,8 @@
     const info = $("#pedalInfo");
     const T = {
       e: "<b>Embrayage, au pied gauche.</b> Il sépare le moteur des roues. On l'enfonce à fond pour démarrer le moteur, changer de vitesse et s'arrêter. On le relâche doucement pour partir.",
-      f: "<b>Frein, au pied droit, comme avant.</b> Un détail : sans régénération, il sert plus souvent qu'en électrique.",
-      a: "<b>Accélérateur, au pied droit, comme avant.</b> Mais ici, on le lâche à chaque changement de vitesse."
+      f: "<b>Frein, au pied droit, comme en automatique.</b> Rien ne change ici.",
+      a: "<b>Accélérateur, au pied droit, comme en automatique.</b> Mais ici, on le lâche à chaque changement de vitesse, alors que la boîte auto le faisait toute seule."
     };
     $$("#pedalboard .pedal").forEach(p => p.addEventListener("click", () => {
       $$("#pedalboard .pedal").forEach(x => x.classList.toggle("on", x === p && !p.classList.contains("on")));
@@ -327,7 +328,7 @@
         { e: 0, a: 1, g: "2", hb: 0, t: "Pied gauche au repos. Même principe pour la 3e, la 4e et la 5e.", w: "" }
       ],
       "S'arrêter": [
-        { e: 0, a: 0, g: "3", hb: 0, t: "Lâche l'accélérateur : le frein moteur ralentit doucement la voiture.", w: "C'est une sorte de régénération légère." },
+        { e: 0, a: 0, g: "3", hb: 0, t: "Lâche l'accélérateur : le frein moteur ralentit doucement la voiture.", w: "C'est le frein moteur : plus la vitesse engagée est basse, plus il ralentit." },
         { e: 0, f: 1, g: "3", hb: 0, t: "Freine normalement.", w: "" },
         { e: 2, f: 1, g: "3", hb: 0, t: "Vers 15-20 km/h, ou dès que le moteur vibre : embrayage à fond.", w: "Sinon les roues ralentissent le moteur jusqu'à le faire caler." },
         { e: 2, f: 2, g: "N", hb: 0, t: "Une fois arrêtée : point mort.", w: "Pas besoin de repasser toutes les vitesses en ralentissant : de la 3e, on s'arrête, puis on repart en 1re." },
@@ -387,6 +388,7 @@
   (function quiz() {
     const Q = [
       ["À quoi sert l'embrayage ?", ["À freiner plus fort", "À séparer le moteur des roues", "À accélérer plus vite"], 1, "Il sépare le moteur des roues, pour s'arrêter ou changer de vitesse sans caler."],
+      ["En boîte auto, lâcher le frein suffisait pour avancer. Ici, en 1re, qu'est-ce qui fait avancer la voiture ?", ["Lâcher le frein, comme avant", "Relâcher doucement l'embrayage", "Appuyer fort sur l'accélérateur"], 1, "C'est l'embrayage qui relie le moteur aux roues. Doucement, sinon tu cales !"],
       ["Avec quel pied appuie-t-on sur l'embrayage ?", ["Le pied gauche", "Le pied droit", "Ça dépend"], 0, "Toujours le gauche, et le gauche ne fait que ça."],
       ["Tu viens de caler à un feu. Que fais-tu ?", ["J'accélère fort pour relancer", "Frein, embrayage à fond, point mort, et je redémarre", "Je relâche l'embrayage et je tourne la clé"], 1, "On sécurise d'abord (frein), puis embrayage à fond pour redémarrer. Et on respire 😌"],
       ["Le moteur hurle et le compte-tours dépasse 4 000 tr/min. Que faire ?", ["Descendre une vitesse", "Monter une vitesse", "Freiner"], 1, "Une vitesse plus haute fait tourner le moteur moins vite à la même allure."],

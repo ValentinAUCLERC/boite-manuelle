@@ -163,7 +163,7 @@
   const base = (o = {}) => Object.assign(S, { running: false, starting: 0, rpm: 0, v: 0, x: 0, hb: true, hill: false }, o);
   const MISSIONS = [
     { t: "Démarrer le moteur", d: "Embrayage à fond, puis la clé.", setup() { base(); setGear(0); }, ok: () => S.running },
-    { t: "Avancer sans accélérateur", d: "1re, frein à main desserré, puis remonte l'embrayage très doucement. En vrai, sur le plat, l'Agila avance sans gaz !",
+    { t: "Avancer sans accélérateur", d: "1re, frein à main desserré, puis remonte l'embrayage très doucement. Sur le plat, l'Agila avance sans gaz, un peu comme en D !",
       setup() { base({ running: true, rpm: 850 }); setGear(0); T.gasMax = 0; },
       tick() { if (Math.abs(S.v) < .05 && S.p.clutch > .85) T.gasMax = 0; T.gasMax = Math.max(T.gasMax, S.p.gas); if (T.gasMax > .08 && S.v > .5) coachSay("Pour cette mission, n'accélère pas du tout 😉 Arrête-toi et recommence.", "warn", 800); },
       ok: () => S.gear === 1 && S.v * 3.6 >= 5 && T.gasMax <= .08 },
