@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cut">
+<title>La boîte manuelle, sans stress · pour Guorui</title>
+<meta name="description" content="Passer d'une voiture électrique à une boîte manuelle : embrayage, vitesses, démarrage en côte… expliqué en animations, avec un simulateur pour s'entraîner à ne pas caler.">
+<meta name="theme-color" content="#1846e0">
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%231846e0'/%3E%3Cpath d='M18 16v32M32 16v32M46 16v32M18 32h28' stroke='%23ffd29e' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preload" href="fonts/bricolage-grotesque-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+
+<nav class="chapters" id="chapters" aria-label="Chapitres">
+  <a href="#pourquoi" data-ch="pourquoi"><b>1</b>Pourquoi</a>
+  <a href="#embrayage" data-ch="embrayage"><b>2</b>Embrayage</a>
+  <a href="#pedales" data-ch="pedales"><b>3</b>Pédales</a>
+  <a href="#grille" data-ch="grille"><b>4</b>Levier</a>
+  <a href="#simu" data-ch="simu"><b>5</b>Simulateur</a>
+  <a href="#rapports" data-ch="rapports"><b>6</b>Quand passer</a>
+  <a href="#manoeuvres" data-ch="manoeuvres"><b>7</b>Pas à pas</a>
+  <a href="#surprises" data-ch="surprises"><b>8</b>Surprises</a>
+  <a href="#quiz" data-ch="quiz"><b>9</b>Quiz</a>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <div class="hero-glow" aria-hidden="true"></div>
+  <p class="kicker">Pour Guorui · Opel Agila 5 vitesses</p>
+  <h1>Trois pédales,<br>cinq vitesses,<br><em>zéro panique.</em></h1>
+  <p class="lede">Tu passes de l'électrique à une boîte manuelle. Ici, tout ce qui change est expliqué en animations, avec un simulateur pour apprendre à ne pas caler… depuis le canapé.</p>
+
+  <div class="hero-art" aria-hidden="true">
+    <svg viewBox="0 -14 260 232" class="hero-grid">
+      <g class="hg-lines">
+        <path d="M50 30v140M130 30v140M210 30v140M50 100h160"/>
+      </g>
+      <g class="hg-labels">
+        <text x="50" y="0">1</text><text x="50" y="212">2</text>
+        <text x="130" y="0">3</text><text x="130" y="212">4</text>
+        <text x="210" y="0">5</text><text x="210" y="212">R</text>
+      </g>
+      <circle class="hg-knob" r="17" cx="130" cy="100"/>
+    </svg>
+  </div>
+
+  <a class="btn btn-light" href="#permis">C'est parti <span aria-hidden="true">↓</span></a>
+  <p class="hero-note">≈ 20 minutes · ta progression est gardée sur ce téléphone</p>
+</header>
+
+<main>
+
+<!-- ============ PERMIS ============ -->
+<section class="block warn reveal" id="permis">
+  <div class="warn-icon" aria-hidden="true">!</div>
+  <div>
+    <h2 class="h3">Avant tout : jette un œil à ton permis</h2>
+    <p>Au dos de ton permis, sur la ligne de la catégorie <b>B</b>, regarde la colonne <b>12</b>. S'il y a le <b>code 78</b>, ton permis est limité aux boîtes automatiques.</p>
+    <p>Dans ce cas, il faut d'abord faire la <b>formation de 7 heures</b> en auto-école. Il n'y a pas d'examen et tu peux la faire tout de suite. Sans elle, conduire l'Agila revient à conduire sans permis, et l'assurance ne te couvre pas.</p>
+    <p class="small">Bonne nouvelle : ce site est un très bon échauffement pour ces 7 heures.</p>
+  </div>
+</section>
+
+<!-- ============ 1. POURQUOI ============ -->
+<section class="chapter" id="pourquoi">
+  <header class="ch-head reveal">
+    <span class="ch-num">1</span>
+    <h2>Ton électrique te facilitait la vie</h2>
+    <p class="ch-sub">Pourquoi l'Agila a besoin de vitesses alors que ta voiture électrique n'en avait pas.</p>
+  </header>
+
+  <div class="duo reveal">
+    <div class="duo-card ev">
+      <h3>Moteur électrique</h3>
+      <p>Il a de la force <b>dès qu'il commence à tourner</b>, et il peut tourner de 0 à plus de 10 000 tours/minute. Une seule « vitesse » suffit, de l'arrêt jusqu'à l'autoroute.</p>
+    </div>
+    <div class="duo-card ice">
+      <h3>Moteur essence</h3>
+      <p>Il ne s'arrête <b>jamais de tourner</b> quand il est allumé (au moins ~800 tr/min). Il est à l'aise entre <b>1 500 et 4 500 tr/min</b> environ. Les vitesses servent à le garder dans cette zone.</p>
+    </div>
+  </div>
+
+  <div class="card lab reveal" id="labRpm">
+    <h3 class="lab-title">Essaie : choisis une vitesse et une allure</h3>
+    <div class="tacho-wrap">
+      <svg viewBox="0 0 220 140" class="tacho" id="labTacho" aria-hidden="true">
+        <path class="t-track" d="M20 120 A90 90 0 0 1 200 120"/>
+        <path class="t-low"  d=""/>
+        <path class="t-good" d=""/>
+        <path class="t-red"  d=""/>
+        <g class="t-ticks"></g>
+        <line class="t-needle" x1="110" y1="120" x2="110" y2="42"/>
+        <circle cx="110" cy="120" r="7" class="t-hub"/>
+      </svg>
+      <div class="tacho-read"><span id="labRpmVal">0</span><small>tr/min</small></div>
+    </div>
+    <p class="lab-msg" id="labMsg" aria-live="polite">…</p>
+
+    <label class="field">
+      <span>Allure : <b id="labSpeedVal">30</b> km/h</span>
+      <input type="range" id="labSpeed" min="0" max="130" value="30" step="1">
+    </label>
+    <div class="seg" id="labGears" role="group" aria-label="Vitesse engagée">
+      <button data-g="1">1</button><button data-g="2" class="on">2</button><button data-g="3">3</button><button data-g="4">4</button><button data-g="5">5</button>
+    </div>
+    <p class="small muted">Régimes approximatifs pour une petite citadine comme l'Agila.</p>
+  </div>
+
+  <div class="callout reveal">
+    <p><b>Et à l'arrêt ?</b> Les roues sont immobiles, mais le moteur doit continuer à tourner. Il faut donc pouvoir <b>séparer le moteur des roues</b> : c'est le rôle de l'embrayage. Si on ne les sépare pas, le moteur est freiné par les roues et s'étouffe : <b>c'est ça, caler</b>.</p>
+  </div>
+</section>
+
+<!-- ============ 2. EMBRAYAGE ============ -->
+<section class="chapter" id="embrayage">
+  <header class="ch-head reveal">
+    <span class="ch-num">2</span>
+    <h2>L'embrayage, c'est deux disques</h2>
+    <p class="ch-sub">C'est LA notion à comprendre. Le reste en découle.</p>
+  </header>
+
+  <div class="card lab reveal">
+    <svg viewBox="0 0 320 190" class="clutch-svg" id="clutchSvg" aria-hidden="true">
+      <!-- moteur -->
+      <rect x="6" y="52" width="70" height="86" rx="12" class="c-engine"/>
+      <text x="41" y="100" class="c-lbl">MOTEUR</text>
+      <rect x="76" y="89" width="34" height="12" class="c-shaft"/>
+      <g id="discA" transform="translate(118 95)">
+        <rect x="-8" y="-62" width="16" height="124" rx="6" class="c-disc-a"/>
+        <g class="c-spokes"><line x1="0" y1="-52" x2="0" y2="-30"/><line x1="0" y1="30" x2="0" y2="52"/></g>
+      </g>
+      <g id="discBwrap">
+        <g id="discB" transform="translate(150 95)">
+          <rect x="-8" y="-62" width="16" height="124" rx="6" class="c-disc-b"/>
+          <g class="c-spokes"><line x1="0" y1="-52" x2="0" y2="-30"/><line x1="0" y1="30" x2="0" y2="52"/></g>
+        </g>
+        <rect id="shaftB" x="158" y="89" width="80" height="12" class="c-shaft"/>
+      </g>
+      <g class="c-sparks" id="sparks">
+        <circle r="2.5"/><circle r="2"/><circle r="2.5"/><circle r="1.8"/>
+      </g>
+      <!-- roue -->
+      <g id="wheel" transform="translate(272 95)">
+        <circle r="40" class="c-tyre"/>
+        <circle r="24" class="c-rim"/>
+        <g class="c-wspokes"><line x1="0" y1="-24" x2="0" y2="24"/><line x1="-24" y1="0" x2="24" y2="0"/></g>
+      </g>
+      <text x="272" y="160" class="c-lbl dark">ROUES</text>
+      <!-- engine rotation indicator -->
+      <g id="engineFan" transform="translate(41 74)">
+        <circle r="9" class="c-fan"/><line x1="0" y1="-9" x2="0" y2="9" class="c-fanl"/>
+      </g>
+    </svg>
+
+    <div class="clutch-state" id="clutchState" aria-live="polite">
+      <b>Pédale enfoncée</b><span>Les disques sont écartés. Le moteur tourne seul, les roues ne bougent pas.</span>
+    </div>
+
+    <label class="field pedal-field">
+      <span class="pf-l">Pédale<br>enfoncée</span>
+      <input type="range" id="clutchRange" min="0" max="100" value="0" aria-label="Position de la pédale d'embrayage">
+      <span class="pf-r">Pédale<br>relâchée</span>
+    </label>
+    <div class="bite-scale" aria-hidden="true"><i style="left:38%;width:30%"></i><span style="left:53%">point de patinage</span></div>
+  </div>
+
+  <ol class="steps-list reveal">
+    <li><b>Pédale enfoncée (« débrayé ») :</b> moteur et roues séparés. Tu peux t'arrêter ou changer de vitesse sans caler.</li>
+    <li><b>Point de patinage :</b> les disques commencent à frotter. La voiture se met à avancer doucement, et le moteur ralentit un peu (le bruit baisse). <b>C'est là qu'il faut être lente et douce.</b></li>
+    <li><b>Pédale relâchée (« embrayé ») :</b> tout tourne ensemble. Tu peux retirer complètement ton pied gauche.</li>
+  </ol>
+  <div class="callout reveal">
+    <p><b>Le secret pour ne pas caler :</b> relâcher la pédale <b>vite</b> jusqu'au point de patinage, <b>lentement</b> pendant le patinage, puis normalement une fois que la voiture roule.</p>
+  </div>
+</section>
+
+<!-- ============ 3. PEDALES ============ -->
+<section class="chapter" id="pedales">
+  <header class="ch-head reveal">
+    <span class="ch-num">3</span>
+    <h2>Une pédale de plus, à gauche</h2>
+    <p class="ch-sub">Touche une pédale pour savoir à quoi elle sert.</p>
+  </header>
+
+  <div class="card lab reveal">
+    <div class="pedalboard" id="pedalboard">
+      <button class="pedal p-e" data-p="e"><span class="pd"></span><b>Embrayage</b><small>pied gauche</small></button>
+      <button class="pedal p-f" data-p="f"><span class="pd"></span><b>Frein</b><small>pied droit</small></button>
+      <button class="pedal p-a" data-p="a"><span class="pd"></span><b>Accélérateur</b><small>pied droit</small></button>
+    </div>
+    <div class="pedal-info" id="pedalInfo" aria-live="polite">
+      <b>Comme avant</b> pour le frein et l'accélérateur. La nouveauté, c'est l'embrayage, tout à gauche.
+    </div>
+  </div>
+
+  <div class="rules reveal">
+    <div class="rule"><span>🦶</span><p><b>Pied gauche = embrayage, et rien d'autre.</b> Ne freine jamais avec le pied gauche.</p></div>
+    <div class="rule"><span>⬇️</span><p><b>Toujours enfoncer l'embrayage à fond</b> pour changer de vitesse ou démarrer le moteur.</p></div>
+    <div class="rule"><span>🚫</span><p><b>Ne laisse pas ton pied posé dessus</b> en roulant : l'embrayage s'use. Pose ton pied à gauche de la pédale, sur le plancher.</p></div>
+  </div>
+</section>
+
+<!-- ============ 4. GRILLE ============ -->
+<section class="chapter" id="grille">
+  <header class="ch-head reveal">
+    <span class="ch-num">4</span>
+    <h2>Le levier et sa grille</h2>
+    <p class="ch-sub">Cinq vitesses en avant et une marche arrière, rangées en forme de H.</p>
+  </header>
+
+  <div class="card lab reveal">
+    <svg viewBox="0 0 300 250" class="gearbox" id="gearbox">
+      <path class="gb-slot" d="M60 40v170M150 40v170M240 40v170M60 125h180"/>
+      <g class="gb-targets">
+        <g data-g="1"><circle cx="60" cy="40" r="26"/><text x="60" y="47">1</text></g>
+        <g data-g="2"><circle cx="60" cy="210" r="26"/><text x="60" y="217">2</text></g>
+        <g data-g="3"><circle cx="150" cy="40" r="26"/><text x="150" y="47">3</text></g>
+        <g data-g="4"><circle cx="150" cy="210" r="26"/><text x="150" y="217">4</text></g>
+        <g data-g="5"><circle cx="240" cy="40" r="26"/><text x="240" y="47">5</text></g>
+        <g data-g="R"><circle cx="240" cy="210" r="26"/><text x="240" y="217">R</text></g>
+        <g data-g="N"><circle cx="150" cy="125" r="20" class="gb-n"/></g>
+      </g>
+      <g id="gbKnob" transform="translate(150 125)">
+        <circle r="19" class="gb-knob"/>
+        <text y="6" id="gbKnobTxt">N</text>
+      </g>
+    </svg>
+    <div class="gear-info" id="gearInfo" aria-live="polite">
+      <b>Point mort (N)</b><span>Aucune vitesse engagée : le levier se balance librement de gauche à droite. Le moteur tourne mais la voiture n'avance pas.</span>
+    </div>
+    <div class="row-btns">
+      <button class="btn btn-small" id="gbChallenge">🎯 Défi : trouve la vitesse</button>
+    </div>
+    <p class="challenge" id="gbChallengeTxt" aria-live="polite"></p>
+  </div>
+
+  <div class="callout reveal">
+    <p><b>Sur ton Agila, vérifie le dessin gravé sur le pommeau du levier.</b> Sur la plupart des Agila, la marche arrière est en bas à droite, comme ici, mais c'est le pommeau qui fait foi. Le manuel de l'Agila précise aussi : pour la marche arrière, voiture <b>complètement arrêtée</b>, embrayage enfoncé, puis <b>attendre 3 secondes</b> avant de l'engager. Si elle ne rentre pas : point mort, relâche l'embrayage, ré-enfonce-le et réessaie.</p>
+  </div>
+  <div class="tips reveal">
+    <p>💡 Pousse le levier avec la paume ouverte, sans le serrer : il trouve son chemin tout seul.</p>
+    <p>💡 Ne garde pas la main posée sur le levier en roulant. Les deux mains restent sur le volant.</p>
+  </div>
+</section>
+
+<!-- ============ 5. SIMULATEUR ============ -->
+<section class="chapter" id="simu">
+  <header class="ch-head reveal">
+    <span class="ch-num">5</span>
+    <h2>Le simulateur anti-calage</h2>
+    <p class="ch-sub">Avec tes pouces, appuie et glisse sur les pédales pour doser. Si tu lâches une pédale, elle remonte, comme dans la vraie voiture.</p>
+  </header>
+
+  <div class="sim reveal" id="sim">
+    <div class="sim-mission" id="simMission"></div>
+
+    <div class="sim-screen">
+      <div class="road" id="road">
+        <div class="road-sky"></div>
+        <div class="road-hill" id="roadHill"></div>
+        <div class="road-lines" id="roadLines"></div>
+        <svg class="car" id="car" viewBox="0 0 150 90" aria-hidden="true">
+          <g transform="translate(152 0) scale(-1 1)"><g class="car-body">
+            <path d="M10 62 L12 42 Q14 34 24 32 L44 30 L58 10 Q61 6 68 6 L118 6 Q128 6 131 14 L140 42 Q142 48 142 56 L142 64 Q142 68 137 68 L14 68 Q10 68 10 62Z" class="cb"/>
+            <path d="M64 13 L116 13 Q121 13 123 18 L130 38 L54 38Z" class="cw"/>
+            <path d="M88 13 L90 38" class="cpil"/>
+            <rect x="12" y="46" width="10" height="6" rx="2" class="clight"/>
+          </g>
+          <g class="smoke" id="smoke"><circle cx="150" cy="60" r="5"/><circle cx="156" cy="54" r="7"/></g></g>
+          <g class="wheel-g" id="carW1" transform="translate(36 68)"><circle r="15" class="ct"/><circle r="7" class="cr"/><line x1="-7" y1="0" x2="7" y2="0" class="cs"/></g>
+          <g class="wheel-g" id="carW2" transform="translate(114 68)"><circle r="15" class="ct"/><circle r="7" class="cr"/><line x1="-7" y1="0" x2="7" y2="0" class="cs"/></g>
+        </svg>
+        <div class="sim-toast" id="simToast" aria-live="assertive"></div>
+      </div>
+
+      <div class="dash">
+        <div class="dash-tacho">
+          <svg viewBox="0 0 220 140" class="tacho" id="simTacho" aria-hidden="true">
+            <path class="t-track" d="M20 120 A90 90 0 0 1 200 120"/>
+            <path class="t-low"  d=""/>
+            <path class="t-good" d=""/>
+            <path class="t-red"  d=""/>
+            <g class="t-ticks"></g>
+            <line class="t-needle" x1="110" y1="120" x2="110" y2="42"/>
+            <circle cx="110" cy="120" r="7" class="t-hub"/>
+          </svg>
+          <div class="tacho-read"><span id="simRpm">0</span><small>tr/min</small></div>
+        </div>
+        <div class="dash-side">
+          <div class="dash-speed"><span id="simSpeed">0</span><small>km/h</small></div>
+          <div class="dash-gear" id="simGearBig">N</div>
+          <div class="dash-led" id="simEngineLed">moteur éteint</div>
+        </div>
+      </div>
+      <div class="coach" id="simCoach" aria-live="polite">Appuie sur l'embrayage, puis sur « Démarrer ».</div>
+    </div>
+
+    <div class="sim-controls">
+      <div class="sim-row">
+        <button class="sim-key" id="simStart">🔑 Démarrer</button>
+        <button class="sim-key" id="simHand" aria-pressed="true">🅿️ Frein à main</button>
+        <button class="sim-key" id="simSound" aria-pressed="false">🔇 Son</button>
+      </div>
+      <div class="sim-gears" id="simGears" role="group" aria-label="Levier de vitesses">
+        <button data-g="1">1</button><button data-g="3">3</button><button data-g="5">5</button>
+        <button data-g="0" class="n on">N</button>
+        <button data-g="2">2</button><button data-g="4">4</button><button data-g="-1">R</button>
+      </div>
+      <div class="sim-pedals">
+        <div class="spedal" data-p="clutch"><div class="spedal-fill"></div><span>Embrayage</span><i class="spedal-bite"></i></div>
+        <div class="spedal" data-p="brake"><div class="spedal-fill"></div><span>Frein</span></div>
+        <div class="spedal" data-p="gas"><div class="spedal-fill"></div><span>Accél.</span></div>
+      </div>
+      <p class="small muted center">Plus ton doigt descend sur la pédale, plus elle est enfoncée. Le petit trait sur l'embrayage marque le point de patinage. Sur ordinateur : clic maintenu et glisser.</p>
+    </div>
+
+    <div class="missions" id="missions">
+      <h3 class="h3">Missions</h3>
+      <ol id="missionList"></ol>
+      <div class="row-btns"><button class="btn btn-small btn-ghost" id="simReset">↺ Recommencer la mission</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 6. RAPPORTS ============ -->
+<section class="chapter" id="rapports">
+  <header class="ch-head reveal">
+    <span class="ch-num">6</span>
+    <h2>Quand changer de vitesse ?</h2>
+    <p class="ch-sub">Pas besoin de regarder le compte-tours en permanence : l'oreille et l'allure suffisent vite.</p>
+  </header>
+
+  <div class="card reveal">
+    <h3 class="h3">Repères d'allure (en ville, sur le plat)</h3>
+    <div class="bands" id="bands">
+      <div class="band" style="--from:0;--to:20"><b>1<sup>re</sup></b><div class="band-track"><i></i></div><span>pour démarrer, jusqu'à ~15 km/h</span></div>
+      <div class="band" style="--from:12;--to:35"><b>2<sup>e</sup></b><div class="band-track"><i></i></div><span>de 15 à 30 km/h</span></div>
+      <div class="band" style="--from:25;--to:55"><b>3<sup>e</sup></b><div class="band-track"><i></i></div><span>de 30 à 50 km/h, la ville</span></div>
+      <div class="band" style="--from:45;--to:75"><b>4<sup>e</sup></b><div class="band-track"><i></i></div><span>de 50 à 70 km/h</span></div>
+      <div class="band" style="--from:65;--to:100"><b>5<sup>e</sup></b><div class="band-track"><i></i></div><span>70 km/h et plus</span></div>
+      <div class="band-axis"><span>0</span><span>25</span><span>50</span><span>75</span><span>100+</span></div>
+    </div>
+    <p class="small muted">Les zones se chevauchent : il n'y a pas de chiffre magique.</p>
+  </div>
+
+  <div class="card reveal">
+    <h3 class="h3">Écoute le moteur</h3>
+    <p>Le son du moteur te dit quand changer. Touche pour écouter :</p>
+    <div class="listen">
+      <button class="listen-btn" data-rpm="1050" data-kind="low"><span class="lb-ico">〰️</span><b>Il broute</b><small>trop bas, il vibre</small><em>→ descends une vitesse</em></button>
+      <button class="listen-btn" data-rpm="2300" data-kind="ok"><span class="lb-ico">🙂</span><b>Il ronronne</b><small>~2 000–2 500 tr/min</small><em>→ parfait</em></button>
+      <button class="listen-btn" data-rpm="4800" data-kind="high"><span class="lb-ico">📢</span><b>Il hurle</b><small>trop haut</small><em>→ monte une vitesse</em></button>
+    </div>
+    <p class="small muted">Son de synthèse, juste pour comprendre l'idée.</p>
+  </div>
+
+  <div class="callout reveal">
+    <p><b>Règle simple :</b> on monte une vitesse vers <b>2 500 tr/min</b> et on redescend quand le moteur passe sous <b>~1 500 tr/min</b> et commence à vibrer, par exemple dans une côte ou en ralentissant.</p>
+  </div>
+</section>
+
+<!-- ============ 7. MANOEUVRES ============ -->
+<section class="chapter" id="manoeuvres">
+  <header class="ch-head reveal">
+    <span class="ch-num">7</span>
+    <h2>Les gestes, pas à pas</h2>
+    <p class="ch-sub">Choisis une situation, puis avance étape par étape. Le schéma montre les pédales enfoncées.</p>
+  </header>
+
+  <div class="card lab reveal" id="howto">
+    <div class="tabs" id="howtoTabs" role="tablist"></div>
+    <div class="howto-stage">
+      <div class="mini-pedals" id="miniPedals" aria-hidden="true">
+        <div class="mp" data-p="e"><i></i><span>E</span></div>
+        <div class="mp" data-p="f"><i></i><span>F</span></div>
+        <div class="mp" data-p="a"><i></i><span>A</span></div>
+        <div class="mp-gear" id="miniGear">N</div>
+        <div class="mp-hb" id="miniHb">🅿️</div>
+      </div>
+      <div class="howto-text">
+        <p class="howto-count" id="howtoCount">Étape 1/5</p>
+        <p class="howto-step" id="howtoStep">…</p>
+        <p class="howto-why" id="howtoWhy"></p>
+      </div>
+    </div>
+    <div class="howto-nav">
+      <button class="btn btn-small btn-ghost" id="howtoPrev">← Préc.</button>
+      <div class="dots" id="howtoDots"></div>
+      <button class="btn btn-small" id="howtoNext">Suiv. →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 8. SURPRISES ============ -->
+<section class="chapter" id="surprises">
+  <header class="ch-head reveal">
+    <span class="ch-num">8</span>
+    <h2>Ce qui va te surprendre en venant de l'électrique</h2>
+    <p class="ch-sub">Pas grave, mais bon à savoir avant.</p>
+  </header>
+
+  <div class="flip-grid">
+    <button class="flip reveal"><span class="f-front"><b>Lever le pied freine moins</b><small>toucher pour lire</small></span><span class="f-back">Pas de récupération d'énergie forte : il n'y a pas de conduite à une pédale. Lever le pied ralentit un peu (c'est le <b>frein moteur</b>, une version douce de la régénération), mais pour s'arrêter, il faut <b>freiner</b>. Anticipe un peu plus.</span></button>
+    <button class="flip reveal"><span class="f-front"><b>Ça vibre et ça fait du bruit</b><small>toucher pour lire</small></span><span class="f-back">Au feu rouge, le moteur tourne et la voiture vibre un peu : c'est <b>normal</b>. Le bruit est aussi ton meilleur indicateur pour changer de vitesse.</span></button>
+    <button class="flip reveal"><span class="f-front"><b>Le moteur s'arrête tout seul au feu ?</b><small>toucher pour lire</small></span><span class="f-back">Si ton Agila a le Stop &amp; Start (voyant vert <b>« A-STOP »</b>), c'est voulu : au point mort, embrayage relâché, le moteur se coupe. <b>Appuie sur l'embrayage</b> et il redémarre. Ce n'est pas un calage.</span></button>
+    <button class="flip reveal"><span class="f-front"><b>Elle peut reculer en côte</b><small>toucher pour lire</small></span><span class="f-back">Ton électrique te retenait sûrement dans les côtes. Ici, au moment de démarrer en montée, la voiture <b>peut reculer</b> : c'est pour ça qu'on utilise le frein à main (voir « En côte » au chapitre 7).</span></button>
+    <button class="flip reveal"><span class="f-front"><b>Tu vas caler. C'est normal.</b><small>toucher pour lire</small></span><span class="f-back">Tout le monde cale, même après des années. Ça ne casse rien. On garde son calme : <b>frein, embrayage à fond, point mort, on redémarre</b>. Et tant pis pour celui qui klaxonne derrière 😌</span></button>
+    <button class="flip reveal"><span class="f-front"><b>À l'arrêt, on met le point mort</b><small>toucher pour lire</small></span><span class="f-back">À un feu un peu long : point mort et pied gauche relâché, ça repose la jambe et l'embrayage. En te garant : <b>frein à main serré</b>, et une vitesse engagée (1<sup>re</sup> en montée, marche arrière en descente) une fois le moteur coupé.</span></button>
+    <button class="flip reveal"><span class="f-front"><b>On fait le plein</b><small>toucher pour lire</small></span><span class="f-back">Plus de prise : direction la station. Le bon carburant est indiqué <b>sur l'étiquette dans la trappe</b>. Ne mets jamais de gazole dans une voiture essence.</span></button>
+    <button class="flip reveal"><span class="f-front"><b>L'embrayage, c'est la jambe gauche</b><small>toucher pour lire</small></span><span class="f-back">Les premiers jours, ta jambe gauche peut être un peu fatiguée dans les bouchons. Ça passe vite. Dans un bouchon, tu peux rouler en 1<sup>re</sup> avec <b>juste l'embrayage</b>, sans accélérer.</span></button>
+  </div>
+</section>
+
+<!-- ============ 9. QUIZ ============ -->
+<section class="chapter" id="quiz">
+  <header class="ch-head reveal">
+    <span class="ch-num">9</span>
+    <h2>Petit quiz</h2>
+    <p class="ch-sub">Sans pression. Huit questions pour vérifier que tout est clair.</p>
+  </header>
+  <div class="card lab reveal" id="quizBox"></div>
+</section>
+
+<!-- ============ FIN ============ -->
+<section class="finale reveal" id="fin">
+  <h2>Et maintenant, dans la vraie voiture</h2>
+  <ol class="plan">
+    <li><b>Un grand parking vide</b>, avec quelqu'un d'habitué à côté.</li>
+    <li><b>Seulement le point de patinage :</b> en 1<sup>re</sup>, sans accélérer, relâche doucement l'embrayage jusqu'à ce que la voiture avance, puis ré-enfonce-le. Dix fois.</li>
+    <li><b>Démarrer en accélérant un peu</b>, puis passer la 2<sup>e</sup> en ligne droite.</li>
+    <li><b>S'arrêter et repartir</b>, encore et encore.</li>
+    <li><b>Une petite côte</b> avec le frein à main.</li>
+    <li>Puis des <b>rues calmes</b>, avant la circulation.</li>
+  </ol>
+  <p class="finale-msg">Tu vas y arriver, Guorui. Personne ne naît en sachant passer la 2<sup>e</sup>. 🚗💙</p>
+  <a class="btn btn-light" href="#top">Revenir en haut ↑</a>
+</section>
+
+</main>
+
+<footer class="foot">
+  <p>Fait avec amour pour Guorui. Ce guide aide à comprendre, il ne remplace pas une leçon de conduite.</p>
+</footer>
+
+<script src="main.js"></script>
+<script src="sim.js"></script>
+</body>
+</html>
