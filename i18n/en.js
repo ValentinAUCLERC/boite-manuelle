@@ -201,7 +201,7 @@
 "Pour ralentir, enfonce un peu l'embrayage. Pour accélérer, relâche-le un peu.": "To slow down, press the clutch in a little. To go faster, release it a little.",
 "Pour t'arrêter : embrayage à fond et frein.": "To stop: clutch all the way down and brake.",
 "Étape {i}/{n}": "Step {i}/{n}",
-"Suivant ↻": "Again ↻",
+"Suivant ↻": "Next one ↻",
 "À quoi sert l'embrayage ?": "What is the clutch for?",
 "À freiner plus fort": "To brake harder",
 "À séparer le moteur des roues": "To separate the engine from the wheels",

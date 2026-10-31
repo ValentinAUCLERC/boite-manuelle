@@ -201,7 +201,7 @@
 "Pour ralentir, enfonce un peu l'embrayage. Pour accélérer, relâche-le un peu.": "想慢一点，就把离合踩下去一点。想快一点，就松开一点。",
 "Pour t'arrêter : embrayage à fond et frein.": "停车时：离合踩到底，踩刹车。",
 "Étape {i}/{n}": "步骤 {i}/{n}",
-"Suivant ↻": "下一项 ↻",
+"Suivant ↻": "下一个场景 ↻",
 "À quoi sert l'embrayage ?": "离合器是干什么用的？",
 "À freiner plus fort": "让刹车更有力",
 "À séparer le moteur des roues": "把发动机和车轮分开",

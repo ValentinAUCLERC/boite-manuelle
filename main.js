@@ -237,9 +237,9 @@
     const INFO = {
       N: [T("Point mort (N)"), T("Aucune vitesse engagée : le levier se balance librement de gauche à droite. Le moteur tourne, la voiture n'avance pas.")],
       1: [T("1re : pour démarrer"), T("La plus forte et la plus lente. On la quitte assez vite, vers 10 à 15 km/h.")],
-      2: ["2e", T("Juste après le démarrage : tire le levier tout droit vers le bas, depuis la 1re.")],
+      2: [gearName(2), T("Juste après le démarrage : tire le levier tout droit vers le bas, depuis la 1re.")],
       3: [T("3e : la ville"), T("Entre 30 et 50 km/h. Le levier repasse par le milieu, puis monte.")],
-      4: ["4e", T("De 50 à 70 km/h : grands boulevards, routes.")],
+      4: [gearName(4), T("De 50 à 70 km/h : grands boulevards, routes.")],
       5: [T("5e : la croisière"), T("Route et voie rapide, à partir d'environ 70 km/h.")],
       R: [T("Marche arrière (R)"), T("Seulement voiture arrêtée ! Embrayage à fond, attendre 3 secondes (conseil du manuel de l'Agila), puis engager. Recule au point de patinage, presque sans accélérer.")]
     };
