@@ -34,10 +34,23 @@
     pd.addEventListener("contextmenu", e => e.preventDefault());
   });
 
+  /* ---------- Boutons multi-touch ----------
+     Chrome Android ne génère pas de « click » pour un 2e doigt quand le 1er est
+     déjà posé (sur une pédale) : on réagit donc au pointerdown, émis pour chaque
+     doigt. Le « click » ne sert plus qu'au clavier (detail === 0). */
+  function press(btn, fn) {
+    btn.addEventListener("pointerdown", ev => {
+      if (ev.pointerType === "mouse" && ev.button !== 0) return;
+      ev.preventDefault(); fn(ev);
+    });
+    btn.addEventListener("click", ev => { if (ev.detail === 0) fn(ev); });
+    btn.addEventListener("contextmenu", e => e.preventDefault());
+  }
+
   /* ---------- Levier ---------- */
   const gearBtns = $$("#simGears button");
   const gname = g => g === 0 ? "N" : g === -1 ? "R" : String(g);
-  gearBtns.forEach(b => b.addEventListener("click", () => {
+  gearBtns.forEach(b => press(b, () => {
     const g = +b.dataset.g;
     if (g === S.gear) return;
     const deny = (txt) => { b.classList.remove("deny"); void b.offsetWidth; b.classList.add("deny"); toast(txt, false); buzz(60); };
@@ -48,14 +61,14 @@
   }));
   function setGear(g) { S.gear = g; gearBtns.forEach(x => x.classList.toggle("on", +x.dataset.g === g)); }
 
-  el.start.addEventListener("click", () => {
+  press(el.start, () => {
     audioKick();
     if (S.running || S.starting) return;
     if (S.p.clutch < .85) { toast("Embrayage à fond pour démarrer", false); buzz(60); coachSay("Sur l'Agila, il faut enfoncer l'embrayage à fond pour démarrer : glisse ton pouce tout en bas de la pédale de gauche.", "warn"); return; }
     S.starting = .6;
   });
-  el.hand.addEventListener("click", () => { S.hb = !S.hb; el.hand.setAttribute("aria-pressed", S.hb); });
-  el.sound.addEventListener("click", () => {
+  press(el.hand, () => { S.hb = !S.hb; el.hand.setAttribute("aria-pressed", S.hb); });
+  press(el.sound, () => {
     S.sound = !S.sound; el.sound.setAttribute("aria-pressed", S.sound); el.sound.textContent = S.sound ? "🔊 Son" : "🔇 Son";
     if (S.sound) Engine.ensure(); else Engine.silence();
   });
