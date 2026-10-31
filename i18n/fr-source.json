@@ -1,0 +1,1218 @@
+[
+ {
+  "fr": "La boîte manuelle, sans stress · pour Guorui",
+  "where": "HTML <title> onglet"
+ },
+ {
+  "fr": "Passer d'une boîte automatique à une boîte manuelle : embrayage, vitesses, démarrage en côte… expliqué en animations, avec un simulateur pour s'entraîner à ne pas caler.",
+  "where": "HTML meta description"
+ },
+ {
+  "fr": "<a href=\"#pourquoi\" data-ch=\"pourquoi\"><b>1</b>Pourquoi</a> <a href=\"#embrayage\" data-ch=\"embrayage\"><b>2</b>Embrayage</a> <a href=\"#pedales\" data-ch=\"pedales\"><b>3</b>Pédales</a> <a href=\"#grille\" data-ch=\"grille\"><b>4</b>Levier</a> <a href=\"#simu\" data-ch=\"simu\"><b>5</b>Simulateur</a> <a href=\"#rapports\" data-ch=\"rapports\"><b>6</b>Quand passer</a> <a href=\"#manoeuvres\" data-ch=\"manoeuvres\"><b>7</b>Pas à pas</a> <a href=\"#surprises\" data-ch=\"surprises\"><b>8</b>Surprises</a> <a href=\"#quiz\" data-ch=\"quiz\"><b>9</b>Quiz</a>",
+  "where": "HTML #chapters <nav.chapters#chapters>"
+ },
+ {
+  "fr": "Pour Guorui · Opel Agila 5 vitesses",
+  "where": "HTML #top <p.kicker>"
+ },
+ {
+  "fr": "Trois pédales,<br>cinq vitesses,<br><em>zéro panique.</em>",
+  "where": "HTML #top <h1>"
+ },
+ {
+  "fr": "Tu passes de la boîte automatique à la boîte manuelle. Ici, tout ce qui change est expliqué en animations, avec un simulateur pour apprendre à ne pas caler… depuis le canapé.",
+  "where": "HTML #top <p.lede>"
+ },
+ {
+  "fr": "C'est parti <span aria-hidden=\"true\">↓</span>",
+  "where": "HTML #top <a.btn>"
+ },
+ {
+  "fr": "≈ 20 minutes · ta progression est gardée sur ce téléphone",
+  "where": "HTML #top <p.hero-note>"
+ },
+ {
+  "fr": "Ta boîte auto faisait le travail pour toi",
+  "where": "HTML #pourquoi <h2>"
+ },
+ {
+  "fr": "Ta voiture automatique avait déjà des vitesses. La seule différence, c'est qu'ici, c'est toi qui les passes.",
+  "where": "HTML #pourquoi <p.ch-sub>"
+ },
+ {
+  "fr": "Boîte automatique",
+  "where": "HTML #pourquoi <h3>"
+ },
+ {
+  "fr": "Elle a <b>des vitesses elle aussi</b>, souvent entre 4 et 8. Un petit ordinateur choisit la bonne et la passe à ta place. À l'arrêt, une pièce appelée « convertisseur » fait le travail de l'embrayage : c'est pour ça qu'elle ne calait jamais.",
+  "where": "HTML #pourquoi <p>"
+ },
+ {
+  "fr": "Boîte manuelle",
+  "where": "HTML #pourquoi <h3>"
+ },
+ {
+  "fr": "Le moteur, lui, ne change pas : il tourne <b>toujours</b> quand il est allumé (au moins ~800 tr/min au ralenti) et il est à l'aise entre <b>1 500 et 4 500 tr/min</b>. C'est <b>toi qui choisis la vitesse</b> pour le garder dans cette zone, et ton <b>pied gauche</b> remplace le convertisseur.",
+  "where": "HTML #pourquoi <p>"
+ },
+ {
+  "fr": "Essaie : choisis une vitesse et une allure",
+  "where": "HTML #labRpm <h3.lab-title>"
+ },
+ {
+  "fr": "<span id=\"labRpmVal\">0</span><small>tr/min</small>",
+  "where": "HTML #labRpm <div.tacho-read>"
+ },
+ {
+  "fr": "Allure : <b id=\"labSpeedVal\">30</b> km/h",
+  "where": "HTML #labRpm <span>"
+ },
+ {
+  "fr": "Régimes approximatifs pour une petite citadine comme l'Agila.",
+  "where": "HTML #labRpm <p.small>"
+ },
+ {
+  "fr": "<b>Et à l'arrêt ?</b> Les roues sont immobiles, mais le moteur doit continuer à tourner. Il faut donc pouvoir <b>séparer le moteur des roues</b> : c'est le rôle de l'embrayage. En automatique, c'est le convertisseur qui faisait ça tout seul. Si on ne les sépare pas, le moteur est freiné par les roues et s'étouffe : <b>c'est ça, caler</b>.",
+  "where": "HTML #pourquoi <p>"
+ },
+ {
+  "fr": "L'embrayage, c'est deux disques",
+  "where": "HTML #embrayage <h2>"
+ },
+ {
+  "fr": "C'est LA notion à comprendre. Le reste en découle.",
+  "where": "HTML #embrayage <p.ch-sub>"
+ },
+ {
+  "fr": "MOTEUR",
+  "where": "HTML #clutchSvg <text>"
+ },
+ {
+  "fr": "ROUES",
+  "where": "HTML #clutchSvg <text>"
+ },
+ {
+  "fr": "<b>Pédale enfoncée</b><span>Les disques sont écartés. Le moteur tourne seul, les roues ne bougent pas.</span>",
+  "where": "HTML #clutchState <div.clutch-state#clutchState>"
+ },
+ {
+  "fr": "Pédale<br>enfoncée",
+  "where": "HTML #embrayage <span.pf-l>"
+ },
+ {
+  "fr": "Pédale<br>relâchée",
+  "where": "HTML #embrayage <span.pf-r>"
+ },
+ {
+  "fr": "<i style=\"left:38%;width:30%\"></i><span style=\"left:53%\">point de patinage</span>",
+  "where": "HTML #embrayage <div.bite-scale>"
+ },
+ {
+  "fr": "<b>Pédale enfoncée (« débrayé ») :</b> moteur et roues séparés. Tu peux t'arrêter ou changer de vitesse sans caler.",
+  "where": "HTML #embrayage <li>"
+ },
+ {
+  "fr": "<b>Point de patinage :</b> les disques commencent à frotter. La voiture se met à avancer doucement, et le moteur ralentit un peu (le bruit baisse). <b>C'est là qu'il faut être lente et douce.</b>",
+  "where": "HTML #embrayage <li>"
+ },
+ {
+  "fr": "<b>Pédale relâchée (« embrayé ») :</b> tout tourne ensemble. Tu peux retirer complètement ton pied gauche.",
+  "where": "HTML #embrayage <li>"
+ },
+ {
+  "fr": "<b>Le secret pour ne pas caler :</b> relâcher la pédale <b>vite</b> jusqu'au point de patinage, <b>lentement</b> pendant le patinage, puis normalement une fois que la voiture roule.",
+  "where": "HTML #embrayage <p>"
+ },
+ {
+  "fr": "Une pédale de plus, à gauche",
+  "where": "HTML #pedales <h2>"
+ },
+ {
+  "fr": "Touche une pédale pour savoir à quoi elle sert.",
+  "where": "HTML #pedales <p.ch-sub>"
+ },
+ {
+  "fr": "<span class=\"pd\"></span><b>Embrayage</b><small>pied gauche</small>",
+  "where": "HTML #pedalboard <button.pedal>"
+ },
+ {
+  "fr": "<span class=\"pd\"></span><b>Frein</b><small>pied droit</small>",
+  "where": "HTML #pedalboard <button.pedal>"
+ },
+ {
+  "fr": "<span class=\"pd\"></span><b>Accélérateur</b><small>pied droit</small>",
+  "where": "HTML #pedalboard <button.pedal>"
+ },
+ {
+  "fr": "<b>Comme avant</b> pour le frein et l'accélérateur. La nouveauté, c'est l'embrayage, tout à gauche.",
+  "where": "HTML #pedalInfo <div.pedal-info#pedalInfo>"
+ },
+ {
+  "fr": "<b>Pied gauche = embrayage, et rien d'autre.</b> Ne freine jamais avec le pied gauche.",
+  "where": "HTML #pedales <p>"
+ },
+ {
+  "fr": "<b>Toujours enfoncer l'embrayage à fond</b> pour changer de vitesse ou démarrer le moteur.",
+  "where": "HTML #pedales <p>"
+ },
+ {
+  "fr": "<b>Ne laisse pas ton pied posé dessus</b> en roulant : l'embrayage s'use. Pose ton pied à gauche de la pédale, sur le plancher.",
+  "where": "HTML #pedales <p>"
+ },
+ {
+  "fr": "Le levier et sa grille",
+  "where": "HTML #grille <h2>"
+ },
+ {
+  "fr": "Cinq vitesses en avant et une marche arrière, rangées en forme de H.",
+  "where": "HTML #grille <p.ch-sub>"
+ },
+ {
+  "fr": "<b>Point mort (N)</b><span>Aucune vitesse engagée : le levier se balance librement de gauche à droite. Le moteur tourne mais la voiture n'avance pas.</span>",
+  "where": "HTML #gearInfo <div.gear-info#gearInfo>"
+ },
+ {
+  "fr": "🎯 Défi : trouve la vitesse",
+  "where": "HTML #gbChallenge <button.btn#gbChallenge>"
+ },
+ {
+  "fr": "<b>Sur ton Agila, vérifie le dessin gravé sur le pommeau du levier.</b> Sur la plupart des Agila, la marche arrière est en bas à droite, comme ici, mais c'est le pommeau qui fait foi. Le manuel de l'Agila précise aussi : pour la marche arrière, voiture <b>complètement arrêtée</b>, embrayage enfoncé, puis <b>attendre 3 secondes</b> avant de l'engager. Si elle ne rentre pas : point mort, relâche l'embrayage, ré-enfonce-le et réessaie.",
+  "where": "HTML #grille <p>"
+ },
+ {
+  "fr": "💡 Pousse le levier avec la paume ouverte, sans le serrer : il trouve son chemin tout seul.",
+  "where": "HTML #grille <p>"
+ },
+ {
+  "fr": "💡 Ne garde pas la main posée sur le levier en roulant. Les deux mains restent sur le volant.",
+  "where": "HTML #grille <p>"
+ },
+ {
+  "fr": "Le simulateur anti-calage",
+  "where": "HTML #simu <h2>"
+ },
+ {
+  "fr": "Avec tes pouces, appuie et glisse sur les pédales pour doser. Si tu lâches une pédale, elle remonte, comme dans la vraie voiture.",
+  "where": "HTML #simu <p.ch-sub>"
+ },
+ {
+  "fr": "<span>▶</span><b>Lancer le simulateur</b><small>en plein écran : rien ne bouge, tout tient sur l'écran</small>",
+  "where": "HTML #simCta <button.sim-cta#simCta>"
+ },
+ {
+  "fr": "<span id=\"simRpm\">0</span><small>tr/min</small>",
+  "where": "HTML #sim <div.tacho-read>"
+ },
+ {
+  "fr": "<span id=\"simSpeed\">0</span><small>km/h</small>",
+  "where": "HTML #sim <div.dash-speed>"
+ },
+ {
+  "fr": "moteur éteint",
+  "where": "HTML #simEngineLed <div.dash-led#simEngineLed>"
+ },
+ {
+  "fr": "Appuie sur l'embrayage, puis sur « Démarrer ».",
+  "where": "HTML #simCoach <div.coach#simCoach>"
+ },
+ {
+  "fr": "🔑 Démarrer",
+  "where": "HTML #simStart <button.sim-key#simStart>"
+ },
+ {
+  "fr": "🅿️ Frein à main",
+  "where": "HTML #simHand <button.sim-key#simHand>"
+ },
+ {
+  "fr": "🔇 Son",
+  "where": "HTML #simSound <button.sim-key#simSound>"
+ },
+ {
+  "fr": "Embrayage",
+  "where": "HTML #sim <span>"
+ },
+ {
+  "fr": "Frein",
+  "where": "HTML #sim <span>"
+ },
+ {
+  "fr": "Accél.",
+  "where": "HTML #sim <span>"
+ },
+ {
+  "fr": "Plus ton doigt descend sur la pédale, plus elle est enfoncée. Le petit trait sur l'embrayage marque le point de patinage. Sur ordinateur : clic maintenu et glisser.",
+  "where": "HTML #sim <p.small>"
+ },
+ {
+  "fr": "Missions",
+  "where": "HTML #missions <h3.h3>"
+ },
+ {
+  "fr": "↺ Recommencer la mission",
+  "where": "HTML #simReset <button.btn#simReset>"
+ },
+ {
+  "fr": "Quand changer de vitesse ?",
+  "where": "HTML #rapports <h2>"
+ },
+ {
+  "fr": "Pas besoin de regarder le compte-tours en permanence : l'oreille et l'allure suffisent vite.",
+  "where": "HTML #rapports <p.ch-sub>"
+ },
+ {
+  "fr": "Repères d'allure (en ville, sur le plat)",
+  "where": "HTML #rapports <h3.h3>"
+ },
+ {
+  "fr": "1<sup>re</sup>",
+  "where": "HTML #bands <b>"
+ },
+ {
+  "fr": "pour démarrer, jusqu'à ~15 km/h",
+  "where": "HTML #bands <span>"
+ },
+ {
+  "fr": "2<sup>e</sup>",
+  "where": "HTML #bands <b>"
+ },
+ {
+  "fr": "de 15 à 30 km/h",
+  "where": "HTML #bands <span>"
+ },
+ {
+  "fr": "3<sup>e</sup>",
+  "where": "HTML #bands <b>"
+ },
+ {
+  "fr": "de 30 à 50 km/h, la ville",
+  "where": "HTML #bands <span>"
+ },
+ {
+  "fr": "4<sup>e</sup>",
+  "where": "HTML #bands <b>"
+ },
+ {
+  "fr": "de 50 à 70 km/h",
+  "where": "HTML #bands <span>"
+ },
+ {
+  "fr": "5<sup>e</sup>",
+  "where": "HTML #bands <b>"
+ },
+ {
+  "fr": "70 km/h et plus",
+  "where": "HTML #bands <span>"
+ },
+ {
+  "fr": "Les zones se chevauchent : il n'y a pas de chiffre magique.",
+  "where": "HTML #rapports <p.small>"
+ },
+ {
+  "fr": "Écoute le moteur",
+  "where": "HTML #rapports <h3.h3>"
+ },
+ {
+  "fr": "Le son du moteur te dit quand changer. Touche pour écouter :",
+  "where": "HTML #rapports <p>"
+ },
+ {
+  "fr": "<span class=\"lb-ico\">〰️</span><b>Il broute</b><small>trop bas, il vibre</small><em>→ descends une vitesse</em>",
+  "where": "HTML #rapports <button.listen-btn>"
+ },
+ {
+  "fr": "<span class=\"lb-ico\">🙂</span><b>Il ronronne</b><small>~2 000–2 500 tr/min</small><em>→ parfait</em>",
+  "where": "HTML #rapports <button.listen-btn>"
+ },
+ {
+  "fr": "<span class=\"lb-ico\">📢</span><b>Il hurle</b><small>trop haut</small><em>→ monte une vitesse</em>",
+  "where": "HTML #rapports <button.listen-btn>"
+ },
+ {
+  "fr": "Son de synthèse, juste pour comprendre l'idée.",
+  "where": "HTML #rapports <p.small>"
+ },
+ {
+  "fr": "<b>Règle simple :</b> on monte une vitesse vers <b>2 500 tr/min</b> et on redescend quand le moteur passe sous <b>~1 500 tr/min</b> et commence à vibrer, par exemple dans une côte ou en ralentissant.",
+  "where": "HTML #rapports <p>"
+ },
+ {
+  "fr": "Les gestes, pas à pas",
+  "where": "HTML #manoeuvres <h2>"
+ },
+ {
+  "fr": "Choisis une situation, puis avance étape par étape. Le schéma montre les pédales enfoncées.",
+  "where": "HTML #manoeuvres <p.ch-sub>"
+ },
+ {
+  "fr": "Étape 1/5",
+  "where": "HTML #howtoCount <p.howto-count#howtoCount>"
+ },
+ {
+  "fr": "← Préc.",
+  "where": "HTML #howtoPrev <button.btn#howtoPrev>"
+ },
+ {
+  "fr": "Suiv. →",
+  "where": "HTML #howtoNext <button.btn#howtoNext>"
+ },
+ {
+  "fr": "Ce qui change par rapport à l'automatique",
+  "where": "HTML #surprises <h2>"
+ },
+ {
+  "fr": "Pas grave, mais bon à savoir avant.",
+  "where": "HTML #surprises <p.ch-sub>"
+ },
+ {
+  "fr": "<span class=\"f-front\"><b>Elle n'avance plus toute seule</b><small>toucher pour lire</small></span><span class=\"f-back\">En D, il suffisait de lâcher le frein pour que la voiture avance doucement. Ici, en 1<sup>re</sup>, c'est en <b>relâchant doucement l'embrayage</b> qu'elle avance. Si tu le lâches d'un coup, elle cale.</span>",
+  "where": "HTML #surprises <button.flip>"
+ },
+ {
+  "fr": "<span class=\"f-front\"><b>Il n'y a pas de position P</b><small>toucher pour lire</small></span><span class=\"f-back\">Pour te garer : <b>frein à main bien serré</b>, puis moteur coupé avec une vitesse engagée (1<sup>re</sup> en montée, marche arrière en descente). Pense à repasser au point mort avant de redémarrer.</span>",
+  "where": "HTML #surprises <button.flip>"
+ },
+ {
+  "fr": "<span class=\"f-front\"><b>Elle peut reculer en côte</b><small>toucher pour lire</small></span><span class=\"f-back\">En D, la boîte auto retenait un peu la voiture dans les côtes. Ici, au moment de démarrer en montée, la voiture <b>peut reculer</b> : c'est pour ça qu'on utilise le frein à main (voir « En côte » au chapitre 7).</span>",
+  "where": "HTML #surprises <button.flip>"
+ },
+ {
+  "fr": "<span class=\"f-front\"><b>Tu vas caler. C'est normal.</b><small>toucher pour lire</small></span><span class=\"f-back\">Tout le monde cale, même après des années. Ça ne casse rien. On garde son calme : <b>frein, embrayage à fond, point mort, on redémarre</b>. Et tant pis pour celui qui klaxonne derrière 😌</span>",
+  "where": "HTML #surprises <button.flip>"
+ },
+ {
+  "fr": "<span class=\"f-front\"><b>Pour doubler, c'est toi qui rétrogrades</b><small>toucher pour lire</small></span><span class=\"f-back\">En auto, appuyer à fond faisait descendre une vitesse tout seul. Ici, si la voiture manque de reprise, <b>descends une vitesse</b> (de 5<sup>e</sup> en 4<sup>e</sup>, ou de 4<sup>e</sup> en 3<sup>e</sup>), puis accélère.</span>",
+  "where": "HTML #surprises <button.flip>"
+ },
+ {
+  "fr": "<span class=\"f-front\"><b>Le frein moteur, c'est toi qui le choisis</b><small>toucher pour lire</small></span><span class=\"f-back\">Plus la vitesse est basse, plus la voiture ralentit quand tu lèves le pied. Dans une longue descente, une vitesse plus basse <b>retient la voiture</b> sans faire chauffer les freins.</span>",
+  "where": "HTML #surprises <button.flip>"
+ },
+ {
+  "fr": "<span class=\"f-front\"><b>Le moteur s'arrête tout seul au feu ?</b><small>toucher pour lire</small></span><span class=\"f-back\">Si ton Agila a le Stop &amp; Start (voyant vert <b>« A-STOP »</b>), c'est voulu : au point mort, embrayage relâché, le moteur se coupe. <b>Appuie sur l'embrayage</b> et il redémarre. Ce n'est pas un calage.</span>",
+  "where": "HTML #surprises <button.flip>"
+ },
+ {
+  "fr": "<span class=\"f-front\"><b>Ta jambe gauche va travailler</b><small>toucher pour lire</small></span><span class=\"f-back\">Au feu, passe au <b>point mort</b> et relâche l'embrayage pour reposer ta jambe. Dans les bouchons, tu peux avancer en 1<sup>re</sup> avec <b>juste l'embrayage</b>, sans accélérer, un peu comme en D.</span>",
+  "where": "HTML #surprises <button.flip>"
+ },
+ {
+  "fr": "Petit quiz",
+  "where": "HTML #quiz <h2>"
+ },
+ {
+  "fr": "Sans pression. Neuf questions pour vérifier que tout est clair.",
+  "where": "HTML #quiz <p.ch-sub>"
+ },
+ {
+  "fr": "Et maintenant, dans la vraie voiture",
+  "where": "HTML #fin <h2>"
+ },
+ {
+  "fr": "<b>Un grand parking vide</b>, avec quelqu'un d'habitué à côté.",
+  "where": "HTML #fin <li>"
+ },
+ {
+  "fr": "<b>Seulement le point de patinage :</b> en 1<sup>re</sup>, sans accélérer, relâche doucement l'embrayage jusqu'à ce que la voiture avance, puis ré-enfonce-le. Dix fois.",
+  "where": "HTML #fin <li>"
+ },
+ {
+  "fr": "<b>Démarrer en accélérant un peu</b>, puis passer la 2<sup>e</sup> en ligne droite.",
+  "where": "HTML #fin <li>"
+ },
+ {
+  "fr": "<b>S'arrêter et repartir</b>, encore et encore.",
+  "where": "HTML #fin <li>"
+ },
+ {
+  "fr": "<b>Une petite côte</b> avec le frein à main.",
+  "where": "HTML #fin <li>"
+ },
+ {
+  "fr": "Puis des <b>rues calmes</b>, avant la circulation.",
+  "where": "HTML #fin <li>"
+ },
+ {
+  "fr": "Tu vas y arriver, Guorui. Personne ne naît en sachant passer la 2<sup>e</sup>. 🚗💙",
+  "where": "HTML #fin <p.finale-msg>"
+ },
+ {
+  "fr": "Revenir en haut ↑",
+  "where": "HTML #fin <a.btn>"
+ },
+ {
+  "fr": "Fait avec amour pour Guorui. Ce guide aide à comprendre, il ne remplace pas une leçon de conduite.",
+  "where": "HTML #footer <p>"
+ },
+ {
+  "fr": "Chapitres",
+  "where": "HTML attribut aria-label/title"
+ },
+ {
+  "fr": "Vitesse engagée",
+  "where": "HTML attribut aria-label/title"
+ },
+ {
+  "fr": "Position de la pédale d'embrayage",
+  "where": "HTML attribut aria-label/title"
+ },
+ {
+  "fr": "Recommencer la mission",
+  "where": "HTML attribut aria-label/title"
+ },
+ {
+  "fr": "Plein écran",
+  "where": "HTML attribut aria-label/title"
+ },
+ {
+  "fr": "Levier de vitesses",
+  "where": "HTML attribut aria-label/title"
+ },
+ {
+  "fr": "E (initiale d'Embrayage)",
+  "where": "HTML attribut aria-label/title"
+ },
+ {
+  "fr": "F (initiale de Frein)",
+  "where": "HTML attribut aria-label/title"
+ },
+ {
+  "fr": "A (initiale d'Accélérateur)",
+  "where": "HTML attribut aria-label/title"
+ },
+ {
+  "fr": "À l'arrêt, les roues ne tournent pas, mais le moteur tourne au ralenti (~800 tr/min). Il faut débrayer, sinon il cale.",
+  "where": "main.js:150"
+ },
+ {
+  "fr": "Bien trop bas : le moteur broute et va caler. Descends une vitesse.",
+  "where": "main.js:151"
+ },
+ {
+  "fr": "Un peu bas : ça passe sur le plat, mais le moteur manque de force.",
+  "where": "main.js:152"
+ },
+ {
+  "fr": "Parfait, le moteur est à l'aise.",
+  "where": "main.js:153"
+ },
+ {
+  "fr": "Ça monte haut : il est temps de passer la vitesse supérieure.",
+  "where": "main.js:154"
+ },
+ {
+  "fr": "Le moteur hurle ! Passe vite la vitesse supérieure.",
+  "where": "main.js:155"
+ },
+ {
+  "fr": "Zone rouge : le moteur ne peut pas tourner aussi vite. Impossible dans cette vitesse.",
+  "where": "main.js:156"
+ },
+ {
+  "fr": "Ta boîte auto, en D, laissait le moteur tourner sans caler : c'est son convertisseur qui faisait le travail de l'embrayage.",
+  "where": "main.js:161"
+ },
+ {
+  "fr": "À {kmh} km/h, ta boîte auto aurait choisi la {g} toute seule.",
+  "where": "main.js:162"
+ },
+ {
+  "fr": "Comme toi 👌",
+  "where": "main.js:162"
+ },
+ {
+  "fr": "<b>Point de patinage</b><span>Les disques se frottent. Les roues commencent à tourner, le moteur ralentit un peu. C'est la zone où il faut être douce.</span>",
+  "where": "main.js:212"
+ },
+ {
+  "fr": "<b>Pédale relâchée</b><span>Les disques sont collés : moteur et roues tournent ensemble.</span>",
+  "where": "main.js:213"
+ },
+ {
+  "fr": "<b>Embrayage, au pied gauche.</b> Il sépare le moteur des roues. On l'enfonce à fond pour démarrer le moteur, changer de vitesse et s'arrêter. On le relâche doucement pour partir.",
+  "where": "main.js:223"
+ },
+ {
+  "fr": "<b>Frein, au pied droit, comme en automatique.</b> Rien ne change ici.",
+  "where": "main.js:224"
+ },
+ {
+  "fr": "<b>Accélérateur, au pied droit, comme en automatique.</b> Mais ici, on le lâche à chaque changement de vitesse, alors que la boîte auto le faisait toute seule.",
+  "where": "main.js:225"
+ },
+ {
+  "fr": "Point mort (N)",
+  "where": "main.js:238"
+ },
+ {
+  "fr": "Aucune vitesse engagée : le levier se balance librement de gauche à droite. Le moteur tourne, la voiture n'avance pas.",
+  "where": "main.js:238"
+ },
+ {
+  "fr": "1re : pour démarrer",
+  "where": "main.js:239"
+ },
+ {
+  "fr": "La plus forte et la plus lente. On la quitte assez vite, vers 10 à 15 km/h.",
+  "where": "main.js:239"
+ },
+ {
+  "fr": "Juste après le démarrage : tire le levier tout droit vers le bas, depuis la 1re.",
+  "where": "main.js:240"
+ },
+ {
+  "fr": "3e : la ville",
+  "where": "main.js:241"
+ },
+ {
+  "fr": "Entre 30 et 50 km/h. Le levier repasse par le milieu, puis monte.",
+  "where": "main.js:241"
+ },
+ {
+  "fr": "De 50 à 70 km/h : grands boulevards, routes.",
+  "where": "main.js:242"
+ },
+ {
+  "fr": "5e : la croisière",
+  "where": "main.js:243"
+ },
+ {
+  "fr": "Route et voie rapide, à partir d'environ 70 km/h.",
+  "where": "main.js:243"
+ },
+ {
+  "fr": "Marche arrière (R)",
+  "where": "main.js:244"
+ },
+ {
+  "fr": "Seulement voiture arrêtée ! Embrayage à fond, attendre 3 secondes (conseil du manuel de l'Agila), puis engager. Recule au point de patinage, presque sans accélérer.",
+  "where": "main.js:244"
+ },
+ {
+  "fr": "Où est la {g} ? ({n}/5)",
+  "where": "main.js:269"
+ },
+ {
+  "fr": "🎉 Bravo, tu connais la grille par cœur !",
+  "where": "main.js:278"
+ },
+ {
+  "fr": "🎯 Rejouer le défi",
+  "where": "main.js:278"
+ },
+ {
+  "fr": "Raté ! Ça, c'est la {to}. Où est la {g} ? (0/5)",
+  "where": "main.js:280"
+ },
+ {
+  "fr": "son non disponible",
+  "where": "main.js:292"
+ },
+ {
+  "fr": "Pied gauche : embrayage à fond. Pied droit : frein.",
+  "where": "main.js:311"
+ },
+ {
+  "fr": "Sur l'Agila, on enfonce l'embrayage pour démarrer. Le frein, c'est par sécurité.",
+  "where": "main.js:311"
+ },
+ {
+  "fr": "Vérifie le point mort : le levier doit se balancer librement de gauche à droite.",
+  "where": "main.js:312"
+ },
+ {
+  "fr": "Si une vitesse est engagée, la voiture pourrait faire un bond en avant.",
+  "where": "main.js:312"
+ },
+ {
+  "fr": "Tourne la clé : le moteur démarre. Lâche la clé dès qu'il tourne.",
+  "where": "main.js:313"
+ },
+ {
+  "fr": "Au point mort, tu peux relâcher l'embrayage : la voiture ne bouge pas.",
+  "where": "main.js:314"
+ },
+ {
+  "fr": "Le moteur tourne au ralenti, autour de 800 tr/min.",
+  "where": "main.js:314"
+ },
+ {
+  "fr": "Moteur allumé : embrayage à fond, pied droit sur le frein.",
+  "where": "main.js:317"
+ },
+ {
+  "fr": "Passe la 1re : en haut à gauche.",
+  "where": "main.js:318"
+ },
+ {
+  "fr": "Main ouverte, sans forcer.",
+  "where": "main.js:318"
+ },
+ {
+  "fr": "Desserre le frein à main, en gardant le pied sur le frein.",
+  "where": "main.js:319"
+ },
+ {
+  "fr": "Regarde dans tes rétros et mets ton clignotant.",
+  "where": "main.js:319"
+ },
+ {
+  "fr": "Pied droit vers l'accélérateur. Remonte l'embrayage doucement jusqu'au point de patinage.",
+  "where": "main.js:320"
+ },
+ {
+  "fr": "Tu le sens : le moteur baisse un peu de régime et la voiture veut avancer.",
+  "where": "main.js:320"
+ },
+ {
+  "fr": "Accélère un tout petit peu et continue de relâcher l'embrayage lentement.",
+  "where": "main.js:321"
+ },
+ {
+  "fr": "Comme une balance : le pied gauche remonte pendant que le pied droit descend.",
+  "where": "main.js:321"
+ },
+ {
+  "fr": "La voiture roule : retire complètement le pied gauche. Tu es partie ! 🎉",
+  "where": "main.js:322"
+ },
+ {
+  "fr": "Vers 2 500 tr/min, ou quand le moteur commence à forcer, on change.",
+  "where": "main.js:325"
+ },
+ {
+  "fr": "En même temps : lâche l'accélérateur et enfonce l'embrayage à fond.",
+  "where": "main.js:326"
+ },
+ {
+  "fr": "Passe la 2e : tire le levier tout droit vers le bas.",
+  "where": "main.js:327"
+ },
+ {
+  "fr": "Sans forcer et sans te presser : la voiture continue de rouler.",
+  "where": "main.js:327"
+ },
+ {
+  "fr": "Relâche l'embrayage en ré-accélérant doucement.",
+  "where": "main.js:328"
+ },
+ {
+  "fr": "Plus vite qu'au démarrage : la voiture roule déjà, le patinage passe vite.",
+  "where": "main.js:328"
+ },
+ {
+  "fr": "Pied gauche au repos. Même principe pour la 3e, la 4e et la 5e.",
+  "where": "main.js:329"
+ },
+ {
+  "fr": "Lâche l'accélérateur : le frein moteur ralentit doucement la voiture.",
+  "where": "main.js:332"
+ },
+ {
+  "fr": "C'est le frein moteur : plus la vitesse engagée est basse, plus il ralentit.",
+  "where": "main.js:332"
+ },
+ {
+  "fr": "Freine normalement.",
+  "where": "main.js:333"
+ },
+ {
+  "fr": "Vers 15-20 km/h, ou dès que le moteur vibre : embrayage à fond.",
+  "where": "main.js:334"
+ },
+ {
+  "fr": "Sinon les roues ralentissent le moteur jusqu'à le faire caler.",
+  "where": "main.js:334"
+ },
+ {
+  "fr": "Une fois arrêtée : point mort.",
+  "where": "main.js:335"
+ },
+ {
+  "fr": "Pas besoin de repasser toutes les vitesses en ralentissant : de la 3e, on s'arrête, puis on repart en 1re.",
+  "where": "main.js:335"
+ },
+ {
+  "fr": "Relâche l'embrayage. Garde le pied sur le frein, ou serre le frein à main si l'arrêt dure.",
+  "where": "main.js:336"
+ },
+ {
+  "fr": "Arrêtée en montée : frein à main serré, embrayage à fond, 1re engagée.",
+  "where": "main.js:339"
+ },
+ {
+  "fr": "Pied droit sur l'accélérateur : un peu plus que sur le plat (~2 000 tr/min).",
+  "where": "main.js:340"
+ },
+ {
+  "fr": "Le frein à main retient la voiture, tu as les deux pieds libres.",
+  "where": "main.js:340"
+ },
+ {
+  "fr": "Remonte l'embrayage jusqu'au point de patinage… et un poil plus.",
+  "where": "main.js:341"
+ },
+ {
+  "fr": "Le signal : l'avant se soulève légèrement et le bruit du moteur baisse. La voiture tire contre le frein à main.",
+  "where": "main.js:341"
+ },
+ {
+  "fr": "À ce moment-là, desserre le frein à main : la voiture avance au lieu de reculer.",
+  "where": "main.js:342"
+ },
+ {
+  "fr": "Continue de relâcher l'embrayage doucement en accélérant. Gagné ! 🏔️",
+  "where": "main.js:343"
+ },
+ {
+  "fr": "Si tu cales : frein, frein à main, et on recommence. Aucun drame.",
+  "where": "main.js:343"
+ },
+ {
+  "fr": "Voiture complètement arrêtée : embrayage à fond, pied sur le frein.",
+  "where": "main.js:346"
+ },
+ {
+  "fr": "Attends 3 secondes.",
+  "where": "main.js:347"
+ },
+ {
+  "fr": "C'est une recommandation du manuel de l'Agila : sinon la marche arrière peut refuser d'entrer.",
+  "where": "main.js:347"
+ },
+ {
+  "fr": "Engage la marche arrière (regarde la position sur le pommeau).",
+  "where": "main.js:348"
+ },
+ {
+  "fr": "Si elle ne rentre pas : point mort, relâche l'embrayage, ré-enfonce-le et réessaie.",
+  "where": "main.js:348"
+ },
+ {
+  "fr": "Relâche très doucement l'embrayage : la voiture recule toute seule, sans accélérer.",
+  "where": "main.js:349"
+ },
+ {
+  "fr": "Pour ralentir, enfonce un peu l'embrayage. Pour accélérer, relâche-le un peu.",
+  "where": "main.js:349"
+ },
+ {
+  "fr": "Pour t'arrêter : embrayage à fond et frein.",
+  "where": "main.js:350"
+ },
+ {
+  "fr": "Étape {i}/{n}",
+  "where": "main.js:371"
+ },
+ {
+  "fr": "Suivant ↻",
+  "where": "main.js:374"
+ },
+ {
+  "fr": "À quoi sert l'embrayage ?",
+  "where": "main.js:391"
+ },
+ {
+  "fr": "À freiner plus fort",
+  "where": "main.js:391"
+ },
+ {
+  "fr": "À séparer le moteur des roues",
+  "where": "main.js:391"
+ },
+ {
+  "fr": "À accélérer plus vite",
+  "where": "main.js:391"
+ },
+ {
+  "fr": "Il sépare le moteur des roues, pour s'arrêter ou changer de vitesse sans caler.",
+  "where": "main.js:391"
+ },
+ {
+  "fr": "En boîte auto, lâcher le frein suffisait pour avancer. Ici, en 1re, qu'est-ce qui fait avancer la voiture ?",
+  "where": "main.js:392"
+ },
+ {
+  "fr": "Lâcher le frein, comme avant",
+  "where": "main.js:392"
+ },
+ {
+  "fr": "Relâcher doucement l'embrayage",
+  "where": "main.js:392"
+ },
+ {
+  "fr": "Appuyer fort sur l'accélérateur",
+  "where": "main.js:392"
+ },
+ {
+  "fr": "C'est l'embrayage qui relie le moteur aux roues. Doucement, sinon tu cales !",
+  "where": "main.js:392"
+ },
+ {
+  "fr": "Avec quel pied appuie-t-on sur l'embrayage ?",
+  "where": "main.js:393"
+ },
+ {
+  "fr": "Le pied gauche",
+  "where": "main.js:393"
+ },
+ {
+  "fr": "Le pied droit",
+  "where": "main.js:393"
+ },
+ {
+  "fr": "Ça dépend",
+  "where": "main.js:393"
+ },
+ {
+  "fr": "Toujours le gauche, et le gauche ne fait que ça.",
+  "where": "main.js:393"
+ },
+ {
+  "fr": "Tu viens de caler à un feu. Que fais-tu ?",
+  "where": "main.js:394"
+ },
+ {
+  "fr": "J'accélère fort pour relancer",
+  "where": "main.js:394"
+ },
+ {
+  "fr": "Frein, embrayage à fond, point mort, et je redémarre",
+  "where": "main.js:394"
+ },
+ {
+  "fr": "Je relâche l'embrayage et je tourne la clé",
+  "where": "main.js:394"
+ },
+ {
+  "fr": "On sécurise d'abord (frein), puis embrayage à fond pour redémarrer. Et on respire 😌",
+  "where": "main.js:394"
+ },
+ {
+  "fr": "Le moteur hurle et le compte-tours dépasse 4 000 tr/min. Que faire ?",
+  "where": "main.js:395"
+ },
+ {
+  "fr": "Descendre une vitesse",
+  "where": "main.js:395"
+ },
+ {
+  "fr": "Monter une vitesse",
+  "where": "main.js:395"
+ },
+ {
+  "fr": "Freiner",
+  "where": "main.js:395"
+ },
+ {
+  "fr": "Une vitesse plus haute fait tourner le moteur moins vite à la même allure.",
+  "where": "main.js:395"
+ },
+ {
+  "fr": "Tu roules à 45 km/h en ville. Quelle vitesse est la plus logique ?",
+  "where": "main.js:396"
+ },
+ {
+  "fr": "La 3e, c'est la vitesse de la ville (30-50 km/h).",
+  "where": "main.js:396"
+ },
+ {
+  "fr": "En freinant pour t'arrêter, quand enfonces-tu l'embrayage ?",
+  "where": "main.js:397"
+ },
+ {
+  "fr": "Vers 15-20 km/h, avant que le moteur vibre",
+  "where": "main.js:397"
+ },
+ {
+  "fr": "Jamais, ce n'est pas utile",
+  "where": "main.js:397"
+ },
+ {
+  "fr": "Dès que je lève le pied de l'accélérateur",
+  "where": "main.js:397"
+ },
+ {
+  "fr": "Pas trop tôt (le frein moteur aide à ralentir), pas trop tard (sinon tu cales).",
+  "where": "main.js:397"
+ },
+ {
+  "fr": "Pour engager la marche arrière sur l'Agila :",
+  "where": "main.js:398"
+ },
+ {
+  "fr": "Je roule encore doucement, c'est plus fluide",
+  "where": "main.js:398"
+ },
+ {
+  "fr": "Arrêtée, embrayage à fond, j'attends 3 secondes",
+  "where": "main.js:398"
+ },
+ {
+  "fr": "Pas besoin d'embrayage",
+  "where": "main.js:398"
+ },
+ {
+  "fr": "Voiture complètement arrêtée, et les 3 secondes recommandées par le manuel de l'Agila.",
+  "where": "main.js:398"
+ },
+ {
+  "fr": "Démarrage en côte : quel est le signal pour desserrer le frein à main ?",
+  "where": "main.js:399"
+ },
+ {
+  "fr": "Quand le moteur hurle",
+  "where": "main.js:399"
+ },
+ {
+  "fr": "L'avant se soulève et le bruit du moteur baisse",
+  "where": "main.js:399"
+ },
+ {
+  "fr": "Quand quelqu'un klaxonne derrière",
+  "where": "main.js:399"
+ },
+ {
+  "fr": "C'est le point de patinage : la voiture tire contre le frein à main.",
+  "where": "main.js:399"
+ },
+ {
+  "fr": "Question {i}/{n}",
+  "where": "main.js:406"
+ },
+ {
+  "fr": "Voir mon score",
+  "where": "main.js:413"
+ },
+ {
+  "fr": "Question suivante →",
+  "where": "main.js:413"
+ },
+ {
+  "fr": "Parfait ! Tu es prête pour le parking 🚗",
+  "where": "main.js:419"
+ },
+ {
+  "fr": "Très bien ! Relis juste les points ratés.",
+  "where": "main.js:419"
+ },
+ {
+  "fr": "Pas mal pour un début. Refais un tour des chapitres et réessaie !",
+  "where": "main.js:419"
+ },
+ {
+  "fr": "Résultat",
+  "where": "main.js:420"
+ },
+ {
+  "fr": "↺ Recommencer",
+  "where": "main.js:420"
+ },
+ {
+  "fr": "Craaac ! Embrayage à fond d'abord",
+  "where": "sim.js:73"
+ },
+ {
+  "fr": "Arrête-toi avant la marche arrière",
+  "where": "sim.js:74"
+ },
+ {
+  "fr": "Tu recules : arrête-toi d'abord",
+  "where": "sim.js:75"
+ },
+ {
+  "fr": "Embrayage à fond pour démarrer",
+  "where": "sim.js:83"
+ },
+ {
+  "fr": "Sur l'Agila, il faut enfoncer l'embrayage à fond pour démarrer : glisse ton pouce tout en bas de la pédale de gauche.",
+  "where": "sim.js:83"
+ },
+ {
+  "fr": "🔊 Son",
+  "where": "sim.js:88"
+ },
+ {
+  "fr": "Calé !",
+  "where": "sim.js:113"
+ },
+ {
+  "fr": "Calé ! Pas grave, ça arrive à tout le monde. Embrayage à fond, puis 🔑 Démarrer.",
+  "where": "sim.js:115"
+ },
+ {
+  "fr": "Le démarreur tourne…",
+  "where": "sim.js:174"
+ },
+ {
+  "fr": "Moteur éteint. Glisse ton pouce tout en bas de l'embrayage, puis 🔑 Démarrer.",
+  "where": "sim.js:175"
+ },
+ {
+  "fr": "Embrayage enfoncé 👍 Maintenant, 🔑 Démarrer.",
+  "where": "sim.js:175"
+ },
+ {
+  "fr": "Ça hurle ! Passe la vitesse supérieure : lâche l'accélérateur, embrayage à fond, levier.",
+  "where": "sim.js:176"
+ },
+ {
+  "fr": "Tu fais patiner l'embrayage en accélérant fort : ça l'use. Relâche-le un peu plus franchement.",
+  "where": "sim.js:177"
+ },
+ {
+  "fr": "Attention, le frein à main est encore serré !",
+  "where": "sim.js:178"
+ },
+ {
+  "fr": "La voiture recule ! Freine, ou serre le frein à main.",
+  "where": "sim.js:179"
+ },
+ {
+  "fr": "Le moteur monte haut : passe la vitesse supérieure.",
+  "where": "sim.js:180"
+ },
+ {
+  "fr": "Le moteur broute : il manque de régime. Débraye, ou passe une vitesse plus basse.",
+  "where": "sim.js:181"
+ },
+ {
+  "fr": "Point de patinage : la voiture commence à tirer… doucement, ne lâche pas d'un coup !",
+  "where": "sim.js:182"
+ },
+ {
+  "fr": "En côte : embrayage à fond, 1re. Garde le frein à main serré pour l'instant.",
+  "where": "sim.js:183"
+ },
+ {
+  "fr": "Moteur au ralenti. Embrayage à fond, puis passe la 1re.",
+  "where": "sim.js:183"
+ },
+ {
+  "fr": "1re engagée. Desserre le frein à main (sauf en côte), puis remonte l'embrayage doucement jusqu'au trait.",
+  "where": "sim.js:184"
+ },
+ {
+  "fr": "Remonte doucement l'embrayage jusqu'au trait jaune…",
+  "where": "sim.js:184"
+ },
+ {
+  "fr": "Point mort en roulant : la voiture avance sur son élan, sans frein moteur.",
+  "where": "sim.js:185"
+ },
+ {
+  "fr": "Embrayé.",
+  "where": "sim.js:186"
+ },
+ {
+  "fr": "Nickel, ça roule 👌",
+  "where": "sim.js:186"
+ },
+ {
+  "fr": "Démarrer le moteur",
+  "where": "sim.js:194"
+ },
+ {
+  "fr": "Embrayage à fond, puis la clé.",
+  "where": "sim.js:194"
+ },
+ {
+  "fr": "Avancer sans accélérateur",
+  "where": "sim.js:195"
+ },
+ {
+  "fr": "1re, frein à main desserré, remonte l'embrayage très doucement. Sans gaz, comme en D !",
+  "where": "sim.js:195"
+ },
+ {
+  "fr": "Pour cette mission, n'accélère pas du tout 😉 Arrête-toi et recommence.",
+  "where": "sim.js:197"
+ },
+ {
+  "fr": "Démarrer et atteindre 15 km/h",
+  "where": "sim.js:199"
+ },
+ {
+  "fr": "Embrayage jusqu'au trait, un peu d'accélérateur, puis relâche lentement.",
+  "where": "sim.js:199"
+ },
+ {
+  "fr": "Passer la 2e et rouler à 25 km/h",
+  "where": "sim.js:200"
+ },
+ {
+  "fr": "Vers 15 km/h : lâche l'accélérateur, embrayage à fond, 2e, relâche.",
+  "where": "sim.js:200"
+ },
+ {
+  "fr": "Monter jusqu'en 3e à 40 km/h",
+  "where": "sim.js:201"
+ },
+ {
+  "fr": "1re → 2e → 3e. Écoute le moteur.",
+  "where": "sim.js:201"
+ },
+ {
+  "fr": "S'arrêter sans caler",
+  "where": "sim.js:202"
+ },
+ {
+  "fr": "Tu roules à 40 km/h en 3e. Freine, et débraye avant que le moteur vibre.",
+  "where": "sim.js:202"
+ },
+ {
+  "fr": "Démarrage en côte (10 %)",
+  "where": "sim.js:205"
+ },
+ {
+  "fr": "Frein à main serré, 1re, embrayage au trait avec un peu de gaz, puis desserre le frein à main.",
+  "where": "sim.js:205"
+ },
+ {
+  "fr": "Tu as reculé de {m} m. Serre le frein à main, puis ↺ Recommencer.",
+  "where": "sim.js:207"
+ },
+ {
+  "fr": "Mission {i}/{n}",
+  "where": "sim.js:219"
+ },
+ {
+  "fr": "Quitter le plein écran",
+  "where": "sim.js:238"
+ },
+ {
+  "fr": "moteur allumé",
+  "where": "sim.js:269"
+ },
+ {
+  "fr": "démarrage…",
+  "where": "sim.js:269"
+ },
+ {
+  "fr": "Mission réussie ! 🎉",
+  "where": "sim.js:297"
+ },
+ {
+  "fr": "Bravo ! Mission suivante dans un instant…",
+  "where": "sim.js:298"
+ },
+ {
+  "fr": "Toutes les missions sont réussies, tu es une cheffe 👑",
+  "where": "sim.js:298"
+ },
+ {
+  "fr": "Partir",
+  "where": "main.js: onglet du chapitre « pas à pas »"
+ },
+ {
+  "fr": "S'arrêter",
+  "where": "main.js: onglet du chapitre « pas à pas »"
+ },
+ {
+  "fr": "En côte",
+  "where": "main.js: onglet du chapitre « pas à pas »"
+ },
+ {
+  "fr": "Marche arrière",
+  "where": "main.js: onglet du chapitre « pas à pas »"
+ }
+]

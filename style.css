@@ -380,3 +380,14 @@ html.sim-open,html.sim-open body{overflow:hidden;overscroll-behavior:none}
   .reveal{opacity:1;transform:none}
 }
 @media (min-width:700px){.sim.focus{width:min(520px,100%);margin:0 auto;box-shadow:0 0 0 100vmax rgba(10,12,24,.75)}}
+
+/* langues */
+.lang-switch{position:absolute;top:14px;right:14px;z-index:3;display:flex;gap:2px;padding:3px;border-radius:99px;background:rgba(255,255,255,.14);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.lang-switch button{border:0;background:transparent;color:#fff;font:700 .78rem var(--body);padding:6px 11px;border-radius:99px;opacity:.8}
+.lang-switch button[aria-current]{background:#fff;color:var(--blue);opacity:1}
+.lang-switch.dark{position:static;display:inline-flex;margin-top:12px;background:#ece8e1}
+.lang-switch.dark button{color:var(--ink)}
+.lang-switch.dark button[aria-current]{background:var(--blue);color:#fff}
+html[lang=zh-CN]{--head:"Bricolage","PingFang SC","Noto Sans SC","Noto Sans CJK SC","Source Han Sans SC","Microsoft YaHei",system-ui,sans-serif;--body:"InterT","PingFang SC","Noto Sans SC","Noto Sans CJK SC","Source Han Sans SC","Microsoft YaHei",system-ui,sans-serif}
+html[lang=zh-CN] h1,html[lang=zh-CN] h2,html[lang=zh-CN] h3{letter-spacing:0;line-height:1.18}
+html[lang=zh-CN] body{line-height:1.7}

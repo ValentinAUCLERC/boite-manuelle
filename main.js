@@ -9,6 +9,7 @@
     set(k, v) { try { localStorage.setItem("bm_" + k, JSON.stringify(v)); } catch (e) {} }
   };
   window.BM = { $, $$, clamp, store };
+  const T = window.T, gearName = window.BM_I18N.gearName;
 
   /* ---------- Audio moteur (Web Audio, synthèse) ---------- */
   const Engine = {
@@ -146,19 +147,19 @@
       const kmh = +sp.value; spv.textContent = kmh;
       let rpm = kmh === 0 ? 800 : rpmFor(kmh, g), cls, t;
       if (kmh > 0 && rpm < 800) rpm = rpm; // affiché tel quel : sous le ralenti, il cale
-      if (kmh === 0) { cls = "zero"; t = "À l'arrêt, les roues ne tournent pas, mais le moteur tourne au ralenti (~800 tr/min). Il faut débrayer, sinon il cale."; }
-      else if (rpm < 1000) { cls = "low"; t = "Bien trop bas : le moteur broute et va caler. Descends une vitesse."; }
-      else if (rpm < 1500) { cls = "low"; t = "Un peu bas : ça passe sur le plat, mais le moteur manque de force."; }
-      else if (rpm <= 3600) { cls = "good"; t = "Parfait, le moteur est à l'aise."; }
-      else if (rpm <= 5000) { cls = "high"; t = "Ça monte haut : il est temps de passer la vitesse supérieure."; }
-      else if (rpm <= 6200) { cls = "high"; t = "Le moteur hurle ! Passe vite la vitesse supérieure."; }
-      else { cls = "high"; t = "Zone rouge : le moteur ne peut pas tourner aussi vite. Impossible dans cette vitesse."; }
+      if (kmh === 0) { cls = "zero"; t = T("À l'arrêt, les roues ne tournent pas, mais le moteur tourne au ralenti (~800 tr/min). Il faut débrayer, sinon il cale."); }
+      else if (rpm < 1000) { cls = "low"; t = T("Bien trop bas : le moteur broute et va caler. Descends une vitesse."); }
+      else if (rpm < 1500) { cls = "low"; t = T("Un peu bas : ça passe sur le plat, mais le moteur manque de force."); }
+      else if (rpm <= 3600) { cls = "good"; t = T("Parfait, le moteur est à l'aise."); }
+      else if (rpm <= 5000) { cls = "high"; t = T("Ça monte haut : il est temps de passer la vitesse supérieure."); }
+      else if (rpm <= 6200) { cls = "high"; t = T("Le moteur hurle ! Passe vite la vitesse supérieure."); }
+      else { cls = "high"; t = T("Zone rouge : le moteur ne peut pas tourner aussi vite. Impossible dans cette vitesse."); }
       msg.className = "lab-msg " + cls; msg.textContent = t;
       val.textContent = Math.round(Math.min(rpm, 7500) / 50) * 50;
       setTacho(svg, rpm);
       const auto = kmh === 0 ? 0 : [5, 4, 3, 2].find(k => rpmFor(kmh, k) >= 1700) || 1;
-      ev.textContent = kmh === 0 ? "Ta boîte auto, en D, laissait le moteur tourner sans caler : c'est son convertisseur qui faisait le travail de l'embrayage."
-        : `À ${kmh} km/h, ta boîte auto aurait choisi la ${auto === 1 ? "1re" : auto + "e"} toute seule.${auto === g ? " Comme toi 👌" : ""}`;
+      ev.textContent = kmh === 0 ? T("Ta boîte auto, en D, laissait le moteur tourner sans caler : c'est son convertisseur qui faisait le travail de l'embrayage.")
+        : T("À {kmh} km/h, ta boîte auto aurait choisi la {g} toute seule.", { kmh, g: gearName(auto) }) + (auto === g ? T(" Comme toi 👌") : "");
     }
     $$("#labGears button").forEach(b => b.addEventListener("click", () => {
       g = +b.dataset.g; $$("#labGears button").forEach(x => x.classList.toggle("on", x === b)); upd();
@@ -207,9 +208,9 @@
       const st = e === 0 ? "off" : e < 1 ? "bite" : "on";
       if (st !== lastState) {
         lastState = st; state.className = "clutch-state " + (st === "off" ? "" : st);
-        state.innerHTML = st === "off" ? "<b>Pédale enfoncée</b><span>Les disques sont écartés. Le moteur tourne seul, les roues ne bougent pas.</span>"
-          : st === "bite" ? "<b>Point de patinage</b><span>Les disques se frottent. Les roues commencent à tourner, le moteur ralentit un peu. C'est la zone où il faut être douce.</span>"
-          : "<b>Pédale relâchée</b><span>Les disques sont collés : moteur et roues tournent ensemble.</span>";
+        state.innerHTML = st === "off" ? T("<b>Pédale enfoncée</b><span>Les disques sont écartés. Le moteur tourne seul, les roues ne bougent pas.</span>")
+          : st === "bite" ? T("<b>Point de patinage</b><span>Les disques se frottent. Les roues commencent à tourner, le moteur ralentit un peu. C'est la zone où il faut être douce.</span>")
+          : T("<b>Pédale relâchée</b><span>Les disques sont collés : moteur et roues tournent ensemble.</span>");
       }
       requestAnimationFrame(frame);
     }
@@ -218,14 +219,14 @@
   /* ---------- Chapitre 3 : pédales ---------- */
   (function pedals() {
     const info = $("#pedalInfo");
-    const T = {
-      e: "<b>Embrayage, au pied gauche.</b> Il sépare le moteur des roues. On l'enfonce à fond pour démarrer le moteur, changer de vitesse et s'arrêter. On le relâche doucement pour partir.",
-      f: "<b>Frein, au pied droit, comme en automatique.</b> Rien ne change ici.",
-      a: "<b>Accélérateur, au pied droit, comme en automatique.</b> Mais ici, on le lâche à chaque changement de vitesse, alors que la boîte auto le faisait toute seule."
+    const TXT = {
+      e: T("<b>Embrayage, au pied gauche.</b> Il sépare le moteur des roues. On l'enfonce à fond pour démarrer le moteur, changer de vitesse et s'arrêter. On le relâche doucement pour partir."),
+      f: T("<b>Frein, au pied droit, comme en automatique.</b> Rien ne change ici."),
+      a: T("<b>Accélérateur, au pied droit, comme en automatique.</b> Mais ici, on le lâche à chaque changement de vitesse, alors que la boîte auto le faisait toute seule.")
     };
     $$("#pedalboard .pedal").forEach(p => p.addEventListener("click", () => {
       $$("#pedalboard .pedal").forEach(x => x.classList.toggle("on", x === p && !p.classList.contains("on")));
-      info.innerHTML = T[p.dataset.p];
+      info.innerHTML = TXT[p.dataset.p];
     }));
   })();
 
@@ -234,13 +235,13 @@
     const knob = $("#gbKnob"), txt = $("#gbKnobTxt"), info = $("#gearInfo"), chBtn = $("#gbChallenge"), chTxt = $("#gbChallengeTxt");
     const POS = { N: [150, 125], 1: [60, 40], 2: [60, 210], 3: [150, 40], 4: [150, 210], 5: [240, 40], R: [240, 210] };
     const INFO = {
-      N: ["Point mort (N)", "Aucune vitesse engagée : le levier se balance librement de gauche à droite. Le moteur tourne, la voiture n'avance pas."],
-      1: ["1re : pour démarrer", "La plus forte et la plus lente. On la quitte assez vite, vers 10 à 15 km/h."],
-      2: ["2e", "Juste après le démarrage : tire le levier tout droit vers le bas, depuis la 1re."],
-      3: ["3e : la ville", "Entre 30 et 50 km/h. Le levier repasse par le milieu, puis monte."],
-      4: ["4e", "De 50 à 70 km/h : grands boulevards, routes."],
-      5: ["5e : la croisière", "Route et voie rapide, à partir d'environ 70 km/h."],
-      R: ["Marche arrière (R)", "Seulement voiture arrêtée ! Embrayage à fond, attendre 3 secondes (conseil du manuel de l'Agila), puis engager. Recule au point de patinage, presque sans accélérer."]
+      N: [T("Point mort (N)"), T("Aucune vitesse engagée : le levier se balance librement de gauche à droite. Le moteur tourne, la voiture n'avance pas.")],
+      1: [T("1re : pour démarrer"), T("La plus forte et la plus lente. On la quitte assez vite, vers 10 à 15 km/h.")],
+      2: ["2e", T("Juste après le démarrage : tire le levier tout droit vers le bas, depuis la 1re.")],
+      3: [T("3e : la ville"), T("Entre 30 et 50 km/h. Le levier repasse par le milieu, puis monte.")],
+      4: ["4e", T("De 50 à 70 km/h : grands boulevards, routes.")],
+      5: [T("5e : la croisière"), T("Route et voie rapide, à partir d'environ 70 km/h.")],
+      R: [T("Marche arrière (R)"), T("Seulement voiture arrêtée ! Embrayage à fond, attendre 3 secondes (conseil du manuel de l'Agila), puis engager. Recule au point de patinage, presque sans accélérer.")]
     };
     let cur = "N", anim = null, target = null, streak = 0;
     function move(to) {
@@ -265,7 +266,7 @@
     function ask() {
       const opts = ["1", "2", "3", "4", "5", "R"].filter(g => g !== target);
       target = opts[Math.floor(Math.random() * opts.length)];
-      chTxt.textContent = `Où est la ${target === "R" ? "marche arrière" : target === "1" ? "1re" : target + "e"} ? (${streak}/5)`;
+      chTxt.textContent = T("Où est la {g} ? ({n}/5)", { g: gearName(target), n: streak });
     }
     $$(".gb-targets g").forEach(g => g.addEventListener("click", () => {
       const to = g.dataset.g;
@@ -274,9 +275,9 @@
         c.classList.add(ok ? "hit" : "miss"); setTimeout(() => c.classList.remove("hit", "miss"), 500);
         if (ok) {
           streak++; move(to);
-          if (streak >= 5) { chTxt.textContent = "🎉 Bravo, tu connais la grille par cœur !"; target = null; chBtn.textContent = "🎯 Rejouer le défi"; store.set("grid", 1); return; }
+          if (streak >= 5) { chTxt.textContent = T("🎉 Bravo, tu connais la grille par cœur !"); target = null; chBtn.textContent = T("🎯 Rejouer le défi"); store.set("grid", 1); return; }
           setTimeout(ask, 450);
-        } else { streak = 0; chTxt.textContent = `Raté ! Ça, c'est la ${to === "R" ? "marche arrière" : to === "1" ? "1re" : to + "e"}. Où est la ${target === "R" ? "marche arrière" : target === "1" ? "1re" : target + "e"} ? (0/5)`; }
+        } else { streak = 0; chTxt.textContent = T("Raté ! Ça, c'est la {to}. Où est la {g} ? (0/5)", { to: gearName(to), g: gearName(target) }); }
         return;
       }
       move(to);
@@ -288,7 +289,7 @@
   (function listen() {
     let timer = null, raf = null;
     $$(".listen-btn").forEach(b => b.addEventListener("click", () => {
-      if (!Engine.ensure()) { b.querySelector("small").textContent = "son non disponible"; return; }
+      if (!Engine.ensure()) { b.querySelector("small").textContent = T("son non disponible"); return; }
       $$(".listen-btn").forEach(x => x.classList.remove("playing")); b.classList.add("playing");
       clearTimeout(timer); cancelAnimationFrame(raf);
       const base = +b.dataset.rpm, t0 = performance.now();
@@ -307,59 +308,59 @@
     // e/f/a : 0 relâchée, 1 à moitié, 2 à fond, "b" point de patinage
     const S = {
       "Démarrer le moteur": [
-        { e: 2, f: 2, g: "N", hb: 1, t: "Pied gauche : embrayage à fond. Pied droit : frein.", w: "Sur l'Agila, on enfonce l'embrayage pour démarrer. Le frein, c'est par sécurité." },
-        { e: 2, f: 2, g: "N", hb: 1, t: "Vérifie le point mort : le levier doit se balancer librement de gauche à droite.", w: "Si une vitesse est engagée, la voiture pourrait faire un bond en avant." },
-        { e: 2, f: 2, g: "N", hb: 1, t: "Tourne la clé : le moteur démarre. Lâche la clé dès qu'il tourne.", w: "" },
-        { e: 0, f: 2, g: "N", hb: 1, t: "Au point mort, tu peux relâcher l'embrayage : la voiture ne bouge pas.", w: "Le moteur tourne au ralenti, autour de 800 tr/min." }
+        { e: 2, f: 2, g: "N", hb: 1, t: T("Pied gauche : embrayage à fond. Pied droit : frein."), w: T("Sur l'Agila, on enfonce l'embrayage pour démarrer. Le frein, c'est par sécurité.") },
+        { e: 2, f: 2, g: "N", hb: 1, t: T("Vérifie le point mort : le levier doit se balancer librement de gauche à droite."), w: T("Si une vitesse est engagée, la voiture pourrait faire un bond en avant.") },
+        { e: 2, f: 2, g: "N", hb: 1, t: T("Tourne la clé : le moteur démarre. Lâche la clé dès qu'il tourne."), w: "" },
+        { e: 0, f: 2, g: "N", hb: 1, t: T("Au point mort, tu peux relâcher l'embrayage : la voiture ne bouge pas."), w: T("Le moteur tourne au ralenti, autour de 800 tr/min.") }
       ],
       "Partir": [
-        { e: 2, f: 2, g: "N", hb: 1, t: "Moteur allumé : embrayage à fond, pied droit sur le frein.", w: "" },
-        { e: 2, f: 2, g: "1", hb: 1, t: "Passe la 1re : en haut à gauche.", w: "Main ouverte, sans forcer." },
-        { e: 2, f: 2, g: "1", hb: 0, t: "Desserre le frein à main, en gardant le pied sur le frein.", w: "Regarde dans tes rétros et mets ton clignotant." },
-        { e: "b", f: 0, a: 0, g: "1", hb: 0, t: "Pied droit vers l'accélérateur. Remonte l'embrayage doucement jusqu'au point de patinage.", w: "Tu le sens : le moteur baisse un peu de régime et la voiture veut avancer." },
-        { e: "b", a: 1, g: "1", hb: 0, t: "Accélère un tout petit peu et continue de relâcher l'embrayage lentement.", w: "Comme une balance : le pied gauche remonte pendant que le pied droit descend." },
-        { e: 0, a: 1, g: "1", hb: 0, t: "La voiture roule : retire complètement le pied gauche. Tu es partie ! 🎉", w: "" }
+        { e: 2, f: 2, g: "N", hb: 1, t: T("Moteur allumé : embrayage à fond, pied droit sur le frein."), w: "" },
+        { e: 2, f: 2, g: "1", hb: 1, t: T("Passe la 1re : en haut à gauche."), w: T("Main ouverte, sans forcer.") },
+        { e: 2, f: 2, g: "1", hb: 0, t: T("Desserre le frein à main, en gardant le pied sur le frein."), w: T("Regarde dans tes rétros et mets ton clignotant.") },
+        { e: "b", f: 0, a: 0, g: "1", hb: 0, t: T("Pied droit vers l'accélérateur. Remonte l'embrayage doucement jusqu'au point de patinage."), w: T("Tu le sens : le moteur baisse un peu de régime et la voiture veut avancer.") },
+        { e: "b", a: 1, g: "1", hb: 0, t: T("Accélère un tout petit peu et continue de relâcher l'embrayage lentement."), w: T("Comme une balance : le pied gauche remonte pendant que le pied droit descend.") },
+        { e: 0, a: 1, g: "1", hb: 0, t: T("La voiture roule : retire complètement le pied gauche. Tu es partie ! 🎉"), w: "" }
       ],
       "Monter une vitesse": [
-        { e: 0, a: 1, g: "1", hb: 0, t: "Vers 2 500 tr/min, ou quand le moteur commence à forcer, on change.", w: "" },
-        { e: 2, a: 0, g: "1", hb: 0, t: "En même temps : lâche l'accélérateur et enfonce l'embrayage à fond.", w: "" },
-        { e: 2, a: 0, g: "2", hb: 0, t: "Passe la 2e : tire le levier tout droit vers le bas.", w: "Sans forcer et sans te presser : la voiture continue de rouler." },
-        { e: "b", a: 1, g: "2", hb: 0, t: "Relâche l'embrayage en ré-accélérant doucement.", w: "Plus vite qu'au démarrage : la voiture roule déjà, le patinage passe vite." },
-        { e: 0, a: 1, g: "2", hb: 0, t: "Pied gauche au repos. Même principe pour la 3e, la 4e et la 5e.", w: "" }
+        { e: 0, a: 1, g: "1", hb: 0, t: T("Vers 2 500 tr/min, ou quand le moteur commence à forcer, on change."), w: "" },
+        { e: 2, a: 0, g: "1", hb: 0, t: T("En même temps : lâche l'accélérateur et enfonce l'embrayage à fond."), w: "" },
+        { e: 2, a: 0, g: "2", hb: 0, t: T("Passe la 2e : tire le levier tout droit vers le bas."), w: T("Sans forcer et sans te presser : la voiture continue de rouler.") },
+        { e: "b", a: 1, g: "2", hb: 0, t: T("Relâche l'embrayage en ré-accélérant doucement."), w: T("Plus vite qu'au démarrage : la voiture roule déjà, le patinage passe vite.") },
+        { e: 0, a: 1, g: "2", hb: 0, t: T("Pied gauche au repos. Même principe pour la 3e, la 4e et la 5e."), w: "" }
       ],
       "S'arrêter": [
-        { e: 0, a: 0, g: "3", hb: 0, t: "Lâche l'accélérateur : le frein moteur ralentit doucement la voiture.", w: "C'est le frein moteur : plus la vitesse engagée est basse, plus il ralentit." },
-        { e: 0, f: 1, g: "3", hb: 0, t: "Freine normalement.", w: "" },
-        { e: 2, f: 1, g: "3", hb: 0, t: "Vers 15-20 km/h, ou dès que le moteur vibre : embrayage à fond.", w: "Sinon les roues ralentissent le moteur jusqu'à le faire caler." },
-        { e: 2, f: 2, g: "N", hb: 0, t: "Une fois arrêtée : point mort.", w: "Pas besoin de repasser toutes les vitesses en ralentissant : de la 3e, on s'arrête, puis on repart en 1re." },
-        { e: 0, f: 2, g: "N", hb: 0, t: "Relâche l'embrayage. Garde le pied sur le frein, ou serre le frein à main si l'arrêt dure.", w: "" }
+        { e: 0, a: 0, g: "3", hb: 0, t: T("Lâche l'accélérateur : le frein moteur ralentit doucement la voiture."), w: T("C'est le frein moteur : plus la vitesse engagée est basse, plus il ralentit.") },
+        { e: 0, f: 1, g: "3", hb: 0, t: T("Freine normalement."), w: "" },
+        { e: 2, f: 1, g: "3", hb: 0, t: T("Vers 15-20 km/h, ou dès que le moteur vibre : embrayage à fond."), w: T("Sinon les roues ralentissent le moteur jusqu'à le faire caler.") },
+        { e: 2, f: 2, g: "N", hb: 0, t: T("Une fois arrêtée : point mort."), w: T("Pas besoin de repasser toutes les vitesses en ralentissant : de la 3e, on s'arrête, puis on repart en 1re.") },
+        { e: 0, f: 2, g: "N", hb: 0, t: T("Relâche l'embrayage. Garde le pied sur le frein, ou serre le frein à main si l'arrêt dure."), w: "" }
       ],
       "En côte": [
-        { e: 2, f: 2, g: "1", hb: 1, t: "Arrêtée en montée : frein à main serré, embrayage à fond, 1re engagée.", w: "" },
-        { e: 2, a: 1, g: "1", hb: 1, t: "Pied droit sur l'accélérateur : un peu plus que sur le plat (~2 000 tr/min).", w: "Le frein à main retient la voiture, tu as les deux pieds libres." },
-        { e: "b", a: 1, g: "1", hb: 1, t: "Remonte l'embrayage jusqu'au point de patinage… et un poil plus.", w: "Le signal : l'avant se soulève légèrement et le bruit du moteur baisse. La voiture tire contre le frein à main." },
-        { e: "b", a: 1, g: "1", hb: 0, t: "À ce moment-là, desserre le frein à main : la voiture avance au lieu de reculer.", w: "" },
-        { e: 0, a: 1, g: "1", hb: 0, t: "Continue de relâcher l'embrayage doucement en accélérant. Gagné ! 🏔️", w: "Si tu cales : frein, frein à main, et on recommence. Aucun drame." }
+        { e: 2, f: 2, g: "1", hb: 1, t: T("Arrêtée en montée : frein à main serré, embrayage à fond, 1re engagée."), w: "" },
+        { e: 2, a: 1, g: "1", hb: 1, t: T("Pied droit sur l'accélérateur : un peu plus que sur le plat (~2 000 tr/min)."), w: T("Le frein à main retient la voiture, tu as les deux pieds libres.") },
+        { e: "b", a: 1, g: "1", hb: 1, t: T("Remonte l'embrayage jusqu'au point de patinage… et un poil plus."), w: T("Le signal : l'avant se soulève légèrement et le bruit du moteur baisse. La voiture tire contre le frein à main.") },
+        { e: "b", a: 1, g: "1", hb: 0, t: T("À ce moment-là, desserre le frein à main : la voiture avance au lieu de reculer."), w: "" },
+        { e: 0, a: 1, g: "1", hb: 0, t: T("Continue de relâcher l'embrayage doucement en accélérant. Gagné ! 🏔️"), w: T("Si tu cales : frein, frein à main, et on recommence. Aucun drame.") }
       ],
       "Marche arrière": [
-        { e: 2, f: 2, g: "N", hb: 0, t: "Voiture complètement arrêtée : embrayage à fond, pied sur le frein.", w: "" },
-        { e: 2, f: 2, g: "N", hb: 0, t: "Attends 3 secondes.", w: "C'est une recommandation du manuel de l'Agila : sinon la marche arrière peut refuser d'entrer." },
-        { e: 2, f: 2, g: "R", hb: 0, t: "Engage la marche arrière (regarde la position sur le pommeau).", w: "Si elle ne rentre pas : point mort, relâche l'embrayage, ré-enfonce-le et réessaie." },
-        { e: "b", f: 0, a: 0, g: "R", hb: 0, t: "Relâche très doucement l'embrayage : la voiture recule toute seule, sans accélérer.", w: "Pour ralentir, enfonce un peu l'embrayage. Pour accélérer, relâche-le un peu." },
-        { e: 2, f: 2, g: "R", hb: 0, t: "Pour t'arrêter : embrayage à fond et frein.", w: "" }
+        { e: 2, f: 2, g: "N", hb: 0, t: T("Voiture complètement arrêtée : embrayage à fond, pied sur le frein."), w: "" },
+        { e: 2, f: 2, g: "N", hb: 0, t: T("Attends 3 secondes."), w: T("C'est une recommandation du manuel de l'Agila : sinon la marche arrière peut refuser d'entrer.") },
+        { e: 2, f: 2, g: "R", hb: 0, t: T("Engage la marche arrière (regarde la position sur le pommeau)."), w: T("Si elle ne rentre pas : point mort, relâche l'embrayage, ré-enfonce-le et réessaie.") },
+        { e: "b", f: 0, a: 0, g: "R", hb: 0, t: T("Relâche très doucement l'embrayage : la voiture recule toute seule, sans accélérer."), w: T("Pour ralentir, enfonce un peu l'embrayage. Pour accélérer, relâche-le un peu.") },
+        { e: 2, f: 2, g: "R", hb: 0, t: T("Pour t'arrêter : embrayage à fond et frein."), w: "" }
       ]
     };
     const tabs = $("#howtoTabs"), mp = $$("#miniPedals .mp"), gear = $("#miniGear"), hb = $("#miniHb");
     const cnt = $("#howtoCount"), st = $("#howtoStep"), why = $("#howtoWhy"), dots = $("#howtoDots"), textBox = $(".howto-text");
     let cat = Object.keys(S)[0], i = 0;
     Object.keys(S).forEach(k => {
-      const b = document.createElement("button"); b.textContent = k; b.setAttribute("role", "tab");
+      const b = document.createElement("button"); b.textContent = T(k); b.dataset.cat = k; b.setAttribute("role", "tab");
       b.addEventListener("click", () => { cat = k; i = 0; render(); b.scrollIntoView({ inline: "center", block: "nearest", behavior: "smooth" }); });
       tabs.appendChild(b);
     });
     function render() {
       const steps = S[cat], s = steps[i];
-      $$("button", tabs).forEach(b => b.classList.toggle("on", b.textContent === cat));
+      $$("button", tabs).forEach(b => b.classList.toggle("on", b.dataset.cat === cat));
       mp.forEach(m => {
         const v = s[m.dataset.p] || 0;
         m.classList.toggle("l1", v === 1); m.classList.toggle("l2", v === 2); m.classList.toggle("bite", v === "b");
@@ -367,15 +368,15 @@
       if (gear.textContent !== s.g) { gear.classList.remove("pop"); void gear.offsetWidth; gear.classList.add("pop"); }
       gear.textContent = s.g; hb.classList.toggle("off", !s.hb);
       textBox.classList.add("anim"); void textBox.offsetWidth; textBox.classList.remove("anim");
-      cnt.textContent = `Étape ${i + 1}/${steps.length}`; st.textContent = s.t; why.textContent = s.w;
+      cnt.textContent = T("Étape {i}/{n}", { i: i + 1, n: steps.length }); st.textContent = s.t; why.textContent = s.w;
       dots.innerHTML = steps.map((_, k) => `<i class="${k === i ? "on" : ""}"></i>`).join("");
       $("#howtoPrev").disabled = i === 0;
-      $("#howtoNext").textContent = i === steps.length - 1 ? "Suivant ↻" : "Suiv. →";
+      $("#howtoNext").textContent = i === steps.length - 1 ? T("Suivant ↻") : T("Suiv. →");
     }
     $("#howtoPrev").addEventListener("click", () => { if (i > 0) { i--; render(); } });
     $("#howtoNext").addEventListener("click", () => {
       const keys = Object.keys(S);
-      if (i < S[cat].length - 1) i++; else { cat = keys[(keys.indexOf(cat) + 1) % keys.length]; i = 0; $$("button", tabs).find(b => b.textContent === cat).scrollIntoView({ inline: "center", block: "nearest", behavior: "smooth" }); }
+      if (i < S[cat].length - 1) i++; else { cat = keys[(keys.indexOf(cat) + 1) % keys.length]; i = 0; $$("button", tabs).find(b => b.dataset.cat === cat).scrollIntoView({ inline: "center", block: "nearest", behavior: "smooth" }); }
       render();
     });
     render();
@@ -387,36 +388,36 @@
   /* ---------- Chapitre 9 : quiz ---------- */
   (function quiz() {
     const Q = [
-      ["À quoi sert l'embrayage ?", ["À freiner plus fort", "À séparer le moteur des roues", "À accélérer plus vite"], 1, "Il sépare le moteur des roues, pour s'arrêter ou changer de vitesse sans caler."],
-      ["En boîte auto, lâcher le frein suffisait pour avancer. Ici, en 1re, qu'est-ce qui fait avancer la voiture ?", ["Lâcher le frein, comme avant", "Relâcher doucement l'embrayage", "Appuyer fort sur l'accélérateur"], 1, "C'est l'embrayage qui relie le moteur aux roues. Doucement, sinon tu cales !"],
-      ["Avec quel pied appuie-t-on sur l'embrayage ?", ["Le pied gauche", "Le pied droit", "Ça dépend"], 0, "Toujours le gauche, et le gauche ne fait que ça."],
-      ["Tu viens de caler à un feu. Que fais-tu ?", ["J'accélère fort pour relancer", "Frein, embrayage à fond, point mort, et je redémarre", "Je relâche l'embrayage et je tourne la clé"], 1, "On sécurise d'abord (frein), puis embrayage à fond pour redémarrer. Et on respire 😌"],
-      ["Le moteur hurle et le compte-tours dépasse 4 000 tr/min. Que faire ?", ["Descendre une vitesse", "Monter une vitesse", "Freiner"], 1, "Une vitesse plus haute fait tourner le moteur moins vite à la même allure."],
-      ["Tu roules à 45 km/h en ville. Quelle vitesse est la plus logique ?", ["1re", "3e", "5e"], 1, "La 3e, c'est la vitesse de la ville (30-50 km/h)."],
-      ["En freinant pour t'arrêter, quand enfonces-tu l'embrayage ?", ["Vers 15-20 km/h, avant que le moteur vibre", "Jamais, ce n'est pas utile", "Dès que je lève le pied de l'accélérateur"], 0, "Pas trop tôt (le frein moteur aide à ralentir), pas trop tard (sinon tu cales)."],
-      ["Pour engager la marche arrière sur l'Agila :", ["Je roule encore doucement, c'est plus fluide", "Arrêtée, embrayage à fond, j'attends 3 secondes", "Pas besoin d'embrayage"], 1, "Voiture complètement arrêtée, et les 3 secondes recommandées par le manuel de l'Agila."],
-      ["Démarrage en côte : quel est le signal pour desserrer le frein à main ?", ["Quand le moteur hurle", "L'avant se soulève et le bruit du moteur baisse", "Quand quelqu'un klaxonne derrière"], 1, "C'est le point de patinage : la voiture tire contre le frein à main."]
+      [T("À quoi sert l'embrayage ?"), [T("À freiner plus fort"), T("À séparer le moteur des roues"), T("À accélérer plus vite")], 1, T("Il sépare le moteur des roues, pour s'arrêter ou changer de vitesse sans caler.")],
+      [T("En boîte auto, lâcher le frein suffisait pour avancer. Ici, en 1re, qu'est-ce qui fait avancer la voiture ?"), [T("Lâcher le frein, comme avant"), T("Relâcher doucement l'embrayage"), T("Appuyer fort sur l'accélérateur")], 1, T("C'est l'embrayage qui relie le moteur aux roues. Doucement, sinon tu cales !")],
+      [T("Avec quel pied appuie-t-on sur l'embrayage ?"), [T("Le pied gauche"), T("Le pied droit"), T("Ça dépend")], 0, T("Toujours le gauche, et le gauche ne fait que ça.")],
+      [T("Tu viens de caler à un feu. Que fais-tu ?"), [T("J'accélère fort pour relancer"), T("Frein, embrayage à fond, point mort, et je redémarre"), T("Je relâche l'embrayage et je tourne la clé")], 1, T("On sécurise d'abord (frein), puis embrayage à fond pour redémarrer. Et on respire 😌")],
+      [T("Le moteur hurle et le compte-tours dépasse 4 000 tr/min. Que faire ?"), [T("Descendre une vitesse"), T("Monter une vitesse"), T("Freiner")], 1, T("Une vitesse plus haute fait tourner le moteur moins vite à la même allure.")],
+      [T("Tu roules à 45 km/h en ville. Quelle vitesse est la plus logique ?"), [1, 3, 5].map(gearName), 1, T("La 3e, c'est la vitesse de la ville (30-50 km/h).")],
+      [T("En freinant pour t'arrêter, quand enfonces-tu l'embrayage ?"), [T("Vers 15-20 km/h, avant que le moteur vibre"), T("Jamais, ce n'est pas utile"), T("Dès que je lève le pied de l'accélérateur")], 0, T("Pas trop tôt (le frein moteur aide à ralentir), pas trop tard (sinon tu cales).")],
+      [T("Pour engager la marche arrière sur l'Agila :"), [T("Je roule encore doucement, c'est plus fluide"), T("Arrêtée, embrayage à fond, j'attends 3 secondes"), T("Pas besoin d'embrayage")], 1, T("Voiture complètement arrêtée, et les 3 secondes recommandées par le manuel de l'Agila.")],
+      [T("Démarrage en côte : quel est le signal pour desserrer le frein à main ?"), [T("Quand le moteur hurle"), T("L'avant se soulève et le bruit du moteur baisse"), T("Quand quelqu'un klaxonne derrière")], 1, T("C'est le point de patinage : la voiture tire contre le frein à main.")]
     ];
     const box = $("#quizBox");
     let i = 0, score = 0;
     function show() {
       if (i >= Q.length) return end();
       const [q, opts, ok, ex] = Q[i];
-      box.innerHTML = `<p class="q-count">Question ${i + 1}/${Q.length}</p><p class="q-text">${q}</p><div class="q-opts">${opts.map((o, k) => `<button data-k="${k}">${o}</button>`).join("")}</div><div class="q-expl" hidden></div>`;
+      box.innerHTML = `<p class="q-count">${T("Question {i}/{n}", { i: i + 1, n: Q.length })}</p><p class="q-text">${q}</p><div class="q-opts">${opts.map((o, k) => `<button data-k="${k}">${o}</button>`).join("")}</div><div class="q-expl" hidden></div>`;
       $$(".q-opts button", box).forEach(b => b.addEventListener("click", () => {
         const k = +b.dataset.k, right = k === ok;
         if (right) score++;
         $$(".q-opts button", box).forEach(x => { x.disabled = true; if (+x.dataset.k === ok) x.classList.add("right"); });
         if (!right) b.classList.add("wrong");
         const e = $(".q-expl", box); e.hidden = false;
-        e.innerHTML = (right ? "✅ " : "❌ ") + ex + `<div class="row-btns"><button class="btn btn-small" id="qNext">${i === Q.length - 1 ? "Voir mon score" : "Question suivante →"}</button></div>`;
+        e.innerHTML = (right ? "✅ " : "❌ ") + ex + `<div class="row-btns"><button class="btn btn-small" id="qNext">${i === Q.length - 1 ? T("Voir mon score") : T("Question suivante →")}</button></div>`;
         $("#qNext").addEventListener("click", () => { i++; show(); });
       }));
     }
     function end() {
       const best = Math.max(score, store.get("quiz", 0)); store.set("quiz", best);
-      const m = score === Q.length ? "Parfait ! Tu es prête pour le parking 🚗" : score >= 6 ? "Très bien ! Relis juste les points ratés." : "Pas mal pour un début. Refais un tour des chapitres et réessaie !";
-      box.innerHTML = `<div class="q-end"><p class="q-count">Résultat</p><p class="q-score">${score}/${Q.length}</p><p>${m}</p><div class="row-btns"><button class="btn btn-small btn-ghost" id="qAgain">↺ Recommencer</button></div></div>`;
+      const m = score === Q.length ? T("Parfait ! Tu es prête pour le parking 🚗") : score >= 6 ? T("Très bien ! Relis juste les points ratés.") : T("Pas mal pour un début. Refais un tour des chapitres et réessaie !");
+      box.innerHTML = `<div class="q-end"><p class="q-count">${T("Résultat")}</p><p class="q-score">${score}/${Q.length}</p><p>${m}</p><div class="row-btns"><button class="btn btn-small btn-ghost" id="qAgain">${T("↺ Recommencer")}</button></div></div>`;
       $("#qAgain").addEventListener("click", () => { i = 0; score = 0; show(); });
       if (score >= 6) confetti();
     }

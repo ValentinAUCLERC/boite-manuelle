@@ -2,6 +2,7 @@
 (function () {
   "use strict";
   const { $, $$, clamp, store } = window.BM;
+  const tr = window.T; // traduction (T est déjà pris par le suivi de mission)
   const Engine = window.BMEngine, Tacho = window.BMTacho, { RATIOS, FINAL, WHEEL_R } = window.BMGear;
 
   const M = 1000, G = 9.81, IE = .12, RPM = 60 / (2 * Math.PI);
@@ -69,9 +70,9 @@
     const g = +b.dataset.g;
     if (g === S.gear) return;
     const deny = (txt) => { b.classList.remove("deny"); void b.offsetWidth; b.classList.add("deny"); toast(txt, false); buzz(60); };
-    if (g !== 0 && !clutchDown()) return deny("Craaac ! Embrayage à fond d'abord");
-    if (g === -1 && Math.abs(S.v) > .3) return deny("Arrête-toi avant la marche arrière");
-    if (g > 0 && S.v < -.3) return deny("Tu recules : arrête-toi d'abord");
+    if (g !== 0 && !clutchDown()) return deny(tr("Craaac ! Embrayage à fond d'abord"));
+    if (g === -1 && Math.abs(S.v) > .3) return deny(tr("Arrête-toi avant la marche arrière"));
+    if (g > 0 && S.v < -.3) return deny(tr("Tu recules : arrête-toi d'abord"));
     setGear(g);
   }));
   function setGear(g) { S.gear = g; gearBtns.forEach(x => x.classList.toggle("on", +x.dataset.g === g)); }
@@ -79,12 +80,12 @@
   press(el.start, () => {
     audioKick();
     if (S.running || S.starting) return;
-    if (!clutchDown()) { toast("Embrayage à fond pour démarrer", false); buzz(60); coachSay("Sur l'Agila, il faut enfoncer l'embrayage à fond pour démarrer : glisse ton pouce tout en bas de la pédale de gauche.", "warn"); return; }
+    if (!clutchDown()) { toast(tr("Embrayage à fond pour démarrer"), false); buzz(60); coachSay(tr("Sur l'Agila, il faut enfoncer l'embrayage à fond pour démarrer : glisse ton pouce tout en bas de la pédale de gauche."), "warn"); return; }
     S.starting = .6;
   });
   press(el.hand, () => { S.hb = !S.hb; el.hand.setAttribute("aria-pressed", S.hb); });
   press(el.sound, () => {
-    S.sound = !S.sound; el.sound.setAttribute("aria-pressed", S.sound); el.sound.textContent = S.sound ? "🔊 Son" : "🔇 Son";
+    S.sound = !S.sound; el.sound.setAttribute("aria-pressed", S.sound); el.sound.textContent = S.sound ? tr("🔊 Son") : tr("🔇 Son");
     if (S.sound) Engine.ensure(); else Engine.silence();
   });
   function audioKick() { if (S.sound) Engine.ensure(); }
@@ -109,9 +110,9 @@
   }
   function stall() {
     S.running = false; S.stalls++; T.stalled = true;
-    toast("Calé !", false); buzz([80, 40, 120]);
+    toast(tr("Calé !"), false); buzz([80, 40, 120]);
     el.car.classList.remove("shake"); void el.car.offsetWidth; el.car.classList.add("shake");
-    coachSay("Calé ! Pas grave, ça arrive à tout le monde. Embrayage à fond, puis 🔑 Démarrer.", "bad", 4500);
+    coachSay(tr("Calé ! Pas grave, ça arrive à tout le monde. Embrayage à fond, puis 🔑 Démarrer."), "bad", 4500);
   }
   function step(dt) {
     const p = S.p;
@@ -170,19 +171,19 @@
     const now = performance.now();
     if (forcedCoach && now < forcedUntil) return forcedCoach;
     const kmh = Math.abs(S.v) * 3.6, e = S._e || 0, p = S.p;
-    if (S.starting) return ["Le démarreur tourne…", ""];
-    if (!S.running) return !clutchDown() ? ["Moteur éteint. Glisse ton pouce tout en bas de l'embrayage, puis 🔑 Démarrer.", ""] : ["Embrayage enfoncé 👍 Maintenant, 🔑 Démarrer.", ""];
-    if (S.rpm > 5600) return ["Ça hurle ! Passe la vitesse supérieure : lâche l'accélérateur, embrayage à fond, levier.", "bad"];
-    if (S.slipTime > 1.5) return ["Tu fais patiner l'embrayage en accélérant fort : ça l'use. Relâche-le un peu plus franchement.", "warn"];
-    if (S.hb && S.gear !== 0 && e > .15) return ["Attention, le frein à main est encore serré !", "warn"];
-    if (S.v < -.4 && S.gear >= 0) return ["La voiture recule ! Freine, ou serre le frein à main.", "bad"];
-    if (S.gear > 0 && e > .9 && S.rpm > 3800) return ["Le moteur monte haut : passe la vitesse supérieure.", "warn"];
-    if (S.gear > 1 && e > .9 && S.rpm < 1150) return ["Le moteur broute : il manque de régime. Débraye, ou passe une vitesse plus basse.", "warn"];
-    if (S.gear !== 0 && e > 0 && e < .95 && kmh < 8) return ["Point de patinage : la voiture commence à tirer… doucement, ne lâche pas d'un coup !", "ok"];
-    if (S.gear === 0 && kmh < 1) return S.hill ? ["En côte : embrayage à fond, 1re. Garde le frein à main serré pour l'instant.", ""] : ["Moteur au ralenti. Embrayage à fond, puis passe la 1re.", ""];
-    if (S.gear === 1 && kmh < 1 && p.clutch > .85) return S.hb ? ["1re engagée. Desserre le frein à main (sauf en côte), puis remonte l'embrayage doucement jusqu'au trait.", ""] : ["Remonte doucement l'embrayage jusqu'au trait jaune…", ""];
-    if (S.gear === 0 && kmh > 3) return ["Point mort en roulant : la voiture avance sur son élan, sans frein moteur.", ""];
-    if (e > .95 && S.gear > 0) return [kmh < 3 ? "Embrayé." : "Nickel, ça roule 👌", "ok"];
+    if (S.starting) return [tr("Le démarreur tourne…"), ""];
+    if (!S.running) return !clutchDown() ? [tr("Moteur éteint. Glisse ton pouce tout en bas de l'embrayage, puis 🔑 Démarrer."), ""] : [tr("Embrayage enfoncé 👍 Maintenant, 🔑 Démarrer."), ""];
+    if (S.rpm > 5600) return [tr("Ça hurle ! Passe la vitesse supérieure : lâche l'accélérateur, embrayage à fond, levier."), "bad"];
+    if (S.slipTime > 1.5) return [tr("Tu fais patiner l'embrayage en accélérant fort : ça l'use. Relâche-le un peu plus franchement."), "warn"];
+    if (S.hb && S.gear !== 0 && e > .15) return [tr("Attention, le frein à main est encore serré !"), "warn"];
+    if (S.v < -.4 && S.gear >= 0) return [tr("La voiture recule ! Freine, ou serre le frein à main."), "bad"];
+    if (S.gear > 0 && e > .9 && S.rpm > 3800) return [tr("Le moteur monte haut : passe la vitesse supérieure."), "warn"];
+    if (S.gear > 1 && e > .9 && S.rpm < 1150) return [tr("Le moteur broute : il manque de régime. Débraye, ou passe une vitesse plus basse."), "warn"];
+    if (S.gear !== 0 && e > 0 && e < .95 && kmh < 8) return [tr("Point de patinage : la voiture commence à tirer… doucement, ne lâche pas d'un coup !"), "ok"];
+    if (S.gear === 0 && kmh < 1) return S.hill ? [tr("En côte : embrayage à fond, 1re. Garde le frein à main serré pour l'instant."), ""] : [tr("Moteur au ralenti. Embrayage à fond, puis passe la 1re."), ""];
+    if (S.gear === 1 && kmh < 1 && p.clutch > .85) return S.hb ? [tr("1re engagée. Desserre le frein à main (sauf en côte), puis remonte l'embrayage doucement jusqu'au trait."), ""] : [tr("Remonte doucement l'embrayage jusqu'au trait jaune…"), ""];
+    if (S.gear === 0 && kmh > 3) return [tr("Point mort en roulant : la voiture avance sur son élan, sans frein moteur."), ""];
+    if (e > .95 && S.gear > 0) return [kmh < 3 ? tr("Embrayé.") : tr("Nickel, ça roule 👌"), "ok"];
     return ["", ""];
   }
 
@@ -190,20 +191,20 @@
   const T = {}; // suivi de la mission en cours
   const base = (o = {}) => Object.assign(S, { running: false, starting: 0, rpm: 0, v: 0, x: 0, hb: true, hill: false }, o);
   const MISSIONS = [
-    { t: "Démarrer le moteur", d: "Embrayage à fond, puis la clé.", setup() { base(); setGear(0); }, ok: () => S.running },
-    { t: "Avancer sans accélérateur", d: "1re, frein à main desserré, remonte l'embrayage très doucement. Sans gaz, comme en D !",
+    { t: tr("Démarrer le moteur"), d: tr("Embrayage à fond, puis la clé."), setup() { base(); setGear(0); }, ok: () => S.running },
+    { t: tr("Avancer sans accélérateur"), d: tr("1re, frein à main desserré, remonte l'embrayage très doucement. Sans gaz, comme en D !"),
       setup() { base({ running: true, rpm: 850 }); setGear(0); T.gasMax = 0; },
-      tick() { if (Math.abs(S.v) < .05 && S.p.clutch > .85) T.gasMax = 0; T.gasMax = Math.max(T.gasMax, S.p.gas); if (T.gasMax > .08 && S.v > .5) coachSay("Pour cette mission, n'accélère pas du tout 😉 Arrête-toi et recommence.", "warn", 800); },
+      tick() { if (Math.abs(S.v) < .05 && S.p.clutch > .85) T.gasMax = 0; T.gasMax = Math.max(T.gasMax, S.p.gas); if (T.gasMax > .08 && S.v > .5) coachSay(tr("Pour cette mission, n'accélère pas du tout 😉 Arrête-toi et recommence."), "warn", 800); },
       ok: () => S.gear === 1 && S.v * 3.6 >= 5 && T.gasMax <= .08 },
-    { t: "Démarrer et atteindre 15 km/h", d: "Embrayage jusqu'au trait, un peu d'accélérateur, puis relâche lentement.", setup() { base({ running: true, rpm: 850 }); setGear(0); }, ok: () => S.gear === 1 && S.v * 3.6 >= 15 },
-    { t: "Passer la 2e et rouler à 25 km/h", d: "Vers 15 km/h : lâche l'accélérateur, embrayage à fond, 2e, relâche.", setup() { base({ running: true, rpm: 850 }); setGear(0); }, ok: () => S.gear === 2 && S._e > .95 && S.v * 3.6 >= 25 },
-    { t: "Monter jusqu'en 3e à 40 km/h", d: "1re → 2e → 3e. Écoute le moteur.", setup() { base({ running: true, rpm: 850 }); setGear(0); }, ok: () => S.gear === 3 && S._e > .95 && S.v * 3.6 >= 40 },
-    { t: "S'arrêter sans caler", d: "Tu roules à 40 km/h en 3e. Freine, et débraye avant que le moteur vibre.",
+    { t: tr("Démarrer et atteindre 15 km/h"), d: tr("Embrayage jusqu'au trait, un peu d'accélérateur, puis relâche lentement."), setup() { base({ running: true, rpm: 850 }); setGear(0); }, ok: () => S.gear === 1 && S.v * 3.6 >= 15 },
+    { t: tr("Passer la 2e et rouler à 25 km/h"), d: tr("Vers 15 km/h : lâche l'accélérateur, embrayage à fond, 2e, relâche."), setup() { base({ running: true, rpm: 850 }); setGear(0); }, ok: () => S.gear === 2 && S._e > .95 && S.v * 3.6 >= 25 },
+    { t: tr("Monter jusqu'en 3e à 40 km/h"), d: tr("1re → 2e → 3e. Écoute le moteur."), setup() { base({ running: true, rpm: 850 }); setGear(0); }, ok: () => S.gear === 3 && S._e > .95 && S.v * 3.6 >= 40 },
+    { t: tr("S'arrêter sans caler"), d: tr("Tu roules à 40 km/h en 3e. Freine, et débraye avant que le moteur vibre."),
       setup() { base({ running: true, hb: false, v: 40 / 3.6 }); setGear(3); S.rpm = S.v / WHEEL_R * RATIOS[3] * FINAL * RPM; T.stalled = false; T.t = 0; },
       tick(dt) { T.t += dt; }, ok: () => T.t > 1 && Math.abs(S.v) < .05 && S.running && !T.stalled },
-    { t: "Démarrage en côte (10 %)", d: "Frein à main serré, 1re, embrayage au trait avec un peu de gaz, puis desserre le frein à main.",
+    { t: tr("Démarrage en côte (10 %)"), d: tr("Frein à main serré, 1re, embrayage au trait avec un peu de gaz, puis desserre le frein à main."),
       setup() { base({ running: true, rpm: 850, hill: true }); setGear(0); T.minX = 0; },
-      tick() { T.minX = Math.min(T.minX, S.x); if (T.minX < -.6) coachSay(`Tu as reculé de ${(-T.minX).toFixed(1)} m. Serre le frein à main, puis ↺ Recommencer.`, "bad", 600); },
+      tick() { T.minX = Math.min(T.minX, S.x); if (T.minX < -.6) coachSay(tr("Tu as reculé de {m} m. Serre le frein à main, puis ↺ Recommencer.", { m: (-T.minX).toFixed(1) }), "bad", 600); },
       ok: () => S.gear === 1 && S.v * 3.6 >= 10 && T.minX > -.6 }
   ];
   const done = new Set(store.get("missions", []));
@@ -215,7 +216,7 @@
     MISSIONS[k].setup();
     el.hand.setAttribute("aria-pressed", S.hb);
     el.road.classList.toggle("hill", S.hill);
-    el.mission.innerHTML = `<b>Mission ${k + 1}/${MISSIONS.length} · ${MISSIONS[k].t}</b><small>${MISSIONS[k].d}</small>`;
+    el.mission.innerHTML = `<b>${tr("Mission {i}/{n}", { i: k + 1, n: MISSIONS.length })} · ${MISSIONS[k].t}</b><small>${MISSIONS[k].d}</small>`;
     renderList(); forcedCoach = null;
   }
   function renderList() {
@@ -234,7 +235,7 @@
   function enterFocus() {
     if (focusOn) return;
     focusOn = true; root.classList.add("sim-open"); el.sim.classList.add("focus");
-    focusBtn.textContent = "✕"; focusBtn.setAttribute("aria-label", "Quitter le plein écran");
+    focusBtn.textContent = "✕"; focusBtn.setAttribute("aria-label", tr("Quitter le plein écran"));
     history.pushState({ simFocus: 1 }, "");
     usedFS = false;
     if (root.requestFullscreen && matchMedia("(pointer:coarse)").matches)
@@ -244,7 +245,7 @@
   function exitFocus(fromHistory) {
     if (!focusOn) return;
     focusOn = false; root.classList.remove("sim-open"); el.sim.classList.remove("focus");
-    focusBtn.textContent = "⛶"; focusBtn.setAttribute("aria-label", "Plein écran");
+    focusBtn.textContent = "⛶"; focusBtn.setAttribute("aria-label", tr("Plein écran"));
     if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
     if (!fromHistory && history.state && history.state.simFocus) history.back();
     el.sim.scrollIntoView({ block: "start", behavior: "instant" });
@@ -265,7 +266,7 @@
     el.rpm.textContent = Math.round(Math.max(0, S.rpm) / 50) * 50;
     el.speed.textContent = Math.round(Math.abs(S.v) * 3.6);
     el.gear.textContent = gname(S.gear);
-    el.led.textContent = S.running ? "moteur allumé" : S.starting ? "démarrage…" : "moteur éteint";
+    el.led.textContent = S.running ? tr("moteur allumé") : S.starting ? tr("démarrage…") : tr("moteur éteint");
     el.led.classList.toggle("on", S.running);
     el.start.classList.toggle("running", S.running);
     $$(".spedal").forEach(pd => pd._fill.style.height = (S.p[pd.dataset.p] * 100) + "%");
@@ -293,8 +294,8 @@
     if (m.tick) m.tick(dt);
     if (!succeeded && m.ok()) {
       succeeded = true; done.add(mi); store.set("missions", [...done]); renderList();
-      toast("Mission réussie ! 🎉", true); buzz(40);
-      coachSay(done.size < MISSIONS.length ? "Bravo ! Mission suivante dans un instant…" : "Toutes les missions sont réussies, tu es une cheffe 👑", "ok", 2500);
+      toast(tr("Mission réussie ! 🎉"), true); buzz(40);
+      coachSay(done.size < MISSIONS.length ? tr("Bravo ! Mission suivante dans un instant…") : tr("Toutes les missions sont réussies, tu es une cheffe 👑"), "ok", 2500);
       if (done.size === MISSIONS.length && window.BMConfetti) window.BMConfetti();
       const from = mi, gen = ++advanceGen;
       if (from < MISSIONS.length - 1) setTimeout(() => { if (mi === from && gen === advanceGen) loadMission(from + 1); }, 2200);
