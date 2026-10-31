@@ -34,6 +34,21 @@
     pd.addEventListener("contextmenu", e => e.preventDefault());
   });
 
+  const clutchDown = () => Math.max(S.p.clutch, S.touch.clutch || 0) >= .8;
+
+  /* ---------- Diagnostic : ajouter #debug à l'URL ---------- */
+  if (location.hash === "#debug") {
+    const box = document.createElement("div"); box.className = "dbg"; document.body.appendChild(box);
+    const log = [];
+    const name = t => t.id || (t.dataset && (t.dataset.p || t.dataset.g)) || t.className || t.tagName;
+    ["pointerdown", "pointerup", "pointercancel", "lostpointercapture", "click"].forEach(type =>
+      addEventListener(type, e => {
+        log.unshift(`${(performance.now() / 1000).toFixed(2)} ${type} #${e.pointerId ?? "-"} ${e.pointerType || ""} → ${String(name(e.target)).slice(0, 24)}`);
+        log.length = 12;
+        box.textContent = `embrayage ${S.p.clutch.toFixed(2)} (doigt ${S.touch.clutch === null ? "—" : S.touch.clutch.toFixed(2)})  moteur ${S.running ? "ON" : "off"}\n` + log.join("\n");
+      }, true));
+  }
+
   /* ---------- Boutons multi-touch ----------
      Chrome Android ne génère pas de « click » pour un 2e doigt quand le 1er est
      déjà posé (sur une pédale) : on réagit donc au pointerdown, émis pour chaque
@@ -54,7 +69,7 @@
     const g = +b.dataset.g;
     if (g === S.gear) return;
     const deny = (txt) => { b.classList.remove("deny"); void b.offsetWidth; b.classList.add("deny"); toast(txt, false); buzz(60); };
-    if (g !== 0 && S.p.clutch < .85) return deny("Craaac ! Embrayage à fond d'abord");
+    if (g !== 0 && !clutchDown()) return deny("Craaac ! Embrayage à fond d'abord");
     if (g === -1 && Math.abs(S.v) > .3) return deny("Arrête-toi avant la marche arrière");
     if (g > 0 && S.v < -.3) return deny("Tu recules : arrête-toi d'abord");
     setGear(g);
@@ -64,7 +79,7 @@
   press(el.start, () => {
     audioKick();
     if (S.running || S.starting) return;
-    if (S.p.clutch < .85) { toast("Embrayage à fond pour démarrer", false); buzz(60); coachSay("Sur l'Agila, il faut enfoncer l'embrayage à fond pour démarrer : glisse ton pouce tout en bas de la pédale de gauche.", "warn"); return; }
+    if (!clutchDown()) { toast("Embrayage à fond pour démarrer", false); buzz(60); coachSay("Sur l'Agila, il faut enfoncer l'embrayage à fond pour démarrer : glisse ton pouce tout en bas de la pédale de gauche.", "warn"); return; }
     S.starting = .6;
   });
   press(el.hand, () => { S.hb = !S.hb; el.hand.setAttribute("aria-pressed", S.hb); });
@@ -156,7 +171,7 @@
     if (forcedCoach && now < forcedUntil) return forcedCoach;
     const kmh = Math.abs(S.v) * 3.6, e = S._e || 0, p = S.p;
     if (S.starting) return ["Le démarreur tourne…", ""];
-    if (!S.running) return p.clutch < .85 ? ["Moteur éteint. Glisse ton pouce tout en bas de l'embrayage, puis 🔑 Démarrer.", ""] : ["Embrayage enfoncé 👍 Maintenant, 🔑 Démarrer.", ""];
+    if (!S.running) return !clutchDown() ? ["Moteur éteint. Glisse ton pouce tout en bas de l'embrayage, puis 🔑 Démarrer.", ""] : ["Embrayage enfoncé 👍 Maintenant, 🔑 Démarrer.", ""];
     if (S.rpm > 5600) return ["Ça hurle ! Passe la vitesse supérieure : lâche l'accélérateur, embrayage à fond, levier.", "bad"];
     if (S.slipTime > 1.5) return ["Tu fais patiner l'embrayage en accélérant fort : ça l'use. Relâche-le un peu plus franchement.", "warn"];
     if (S.hb && S.gear !== 0 && e > .15) return ["Attention, le frein à main est encore serré !", "warn"];

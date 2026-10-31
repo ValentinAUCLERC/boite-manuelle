@@ -217,7 +217,10 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;bac
 .coach{margin:10px 12px 0;padding:10px 12px;border-radius:12px;background:#1d2240;font-size:.92rem;min-height:3.4em;transition:background .3s}
 .coach.warn{background:#4a3410}.coach.bad{background:#4a1418}.coach.ok{background:#0f3d2b}
 .sim-controls{padding:12px 12px 6px;background:#f6f7fb;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
-.sim-controls button{touch-action:none}
+/* toute la zone de commande bloque les gestes navigateur (zoom à 2 doigts, défilement) :
+   sinon un 2e doigt posé entre deux boutons annule le doigt de l'embrayage */
+.sim-row,.sim-gears,.sim-pedals,.sim-controls button{touch-action:none}
+.dbg{position:fixed;left:6px;right:6px;top:52px;z-index:999;background:rgba(10,12,24,.88);color:#9fe3c4;font:11px/1.35 ui-monospace,monospace;padding:6px 8px;border-radius:8px;pointer-events:none;white-space:pre-wrap;max-height:40vh;overflow:hidden}
 .sim-key:active,.sim-gears button:active{transform:scale(.95)}
 .sim-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .sim-key{border:1.5px solid var(--line);background:#fff;border-radius:14px;padding:10px 4px;font-weight:650;font-size:.88rem}
