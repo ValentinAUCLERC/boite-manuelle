@@ -191,7 +191,7 @@
   const base = (o = {}) => Object.assign(S, { running: false, starting: 0, rpm: 0, v: 0, x: 0, hb: true, hill: false }, o);
   const MISSIONS = [
     { t: "Démarrer le moteur", d: "Embrayage à fond, puis la clé.", setup() { base(); setGear(0); }, ok: () => S.running },
-    { t: "Avancer sans accélérateur", d: "1re, frein à main desserré, puis remonte l'embrayage très doucement. Sur le plat, l'Agila avance sans gaz, un peu comme en D !",
+    { t: "Avancer sans accélérateur", d: "1re, frein à main desserré, remonte l'embrayage très doucement. Sans gaz, comme en D !",
       setup() { base({ running: true, rpm: 850 }); setGear(0); T.gasMax = 0; },
       tick() { if (Math.abs(S.v) < .05 && S.p.clutch > .85) T.gasMax = 0; T.gasMax = Math.max(T.gasMax, S.p.gas); if (T.gasMax > .08 && S.v > .5) coachSay("Pour cette mission, n'accélère pas du tout 😉 Arrête-toi et recommence.", "warn", 800); },
       ok: () => S.gear === 1 && S.v * 3.6 >= 5 && T.gasMax <= .08 },
@@ -201,7 +201,7 @@
     { t: "S'arrêter sans caler", d: "Tu roules à 40 km/h en 3e. Freine, et débraye avant que le moteur vibre.",
       setup() { base({ running: true, hb: false, v: 40 / 3.6 }); setGear(3); S.rpm = S.v / WHEEL_R * RATIOS[3] * FINAL * RPM; T.stalled = false; T.t = 0; },
       tick(dt) { T.t += dt; }, ok: () => T.t > 1 && Math.abs(S.v) < .05 && S.running && !T.stalled },
-    { t: "Démarrage en côte (10 %)", d: "Frein à main serré, 1re, embrayage au point de patinage avec un peu de gaz, puis desserre le frein à main.",
+    { t: "Démarrage en côte (10 %)", d: "Frein à main serré, 1re, embrayage au trait avec un peu de gaz, puis desserre le frein à main.",
       setup() { base({ running: true, rpm: 850, hill: true }); setGear(0); T.minX = 0; },
       tick() { T.minX = Math.min(T.minX, S.x); if (T.minX < -.6) coachSay(`Tu as reculé de ${(-T.minX).toFixed(1)} m. Serre le frein à main, puis ↺ Recommencer.`, "bad", 600); },
       ok: () => S.gear === 1 && S.v * 3.6 >= 10 && T.minX > -.6 }
@@ -215,14 +215,45 @@
     MISSIONS[k].setup();
     el.hand.setAttribute("aria-pressed", S.hb);
     el.road.classList.toggle("hill", S.hill);
-    el.mission.innerHTML = `<b>Mission ${k + 1}</b><span>${MISSIONS[k].t}<br><small style="opacity:.8">${MISSIONS[k].d}</small></span>`;
+    el.mission.innerHTML = `<b>Mission ${k + 1}/${MISSIONS.length} · ${MISSIONS[k].t}</b><small>${MISSIONS[k].d}</small>`;
     renderList(); forcedCoach = null;
   }
   function renderList() {
     el.list.innerHTML = MISSIONS.map((m, k) => `<li data-k="${k}" class="${k === mi ? "cur" : ""} ${done.has(k) ? "done" : ""}"><i>${done.has(k) ? "✓" : k + 1}</i><span>${m.t}<small>${m.d}</small></span></li>`).join("");
-    $$("li", el.list).forEach(li => li.addEventListener("click", () => loadMission(+li.dataset.k)));
+    $$("li", el.list).forEach(li => li.addEventListener("click", () => { loadMission(+li.dataset.k); if (matchMedia("(pointer:coarse)").matches) enterFocus(); }));
   }
   el.reset.addEventListener("click", () => loadMission(mi));
+  $("#simRetry").addEventListener("click", () => loadMission(mi));
+
+  /* ---------- Mode plein écran ----------
+     Le simulateur passe en position:fixed sur tout l'écran, la page dessous est
+     bloquée (plus de défilement accidentel ni de « tirer pour actualiser »), et on
+     demande le vrai plein écran au navigateur quand c'est possible. */
+  const root = document.documentElement, focusBtn = $("#simFocus");
+  let focusOn = false, usedFS = false;
+  function enterFocus() {
+    if (focusOn) return;
+    focusOn = true; root.classList.add("sim-open"); el.sim.classList.add("focus");
+    focusBtn.textContent = "✕"; focusBtn.setAttribute("aria-label", "Quitter le plein écran");
+    history.pushState({ simFocus: 1 }, "");
+    usedFS = false;
+    if (root.requestFullscreen && matchMedia("(pointer:coarse)").matches)
+      root.requestFullscreen({ navigationUI: "hide" }).then(() => { usedFS = true; }).catch(() => {});
+    audioKick();
+  }
+  function exitFocus(fromHistory) {
+    if (!focusOn) return;
+    focusOn = false; root.classList.remove("sim-open"); el.sim.classList.remove("focus");
+    focusBtn.textContent = "⛶"; focusBtn.setAttribute("aria-label", "Plein écran");
+    if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+    if (!fromHistory && history.state && history.state.simFocus) history.back();
+    el.sim.scrollIntoView({ block: "start", behavior: "instant" });
+  }
+  focusBtn.addEventListener("click", () => focusOn ? exitFocus() : enterFocus());
+  $("#simCta").addEventListener("click", enterFocus);
+  addEventListener("popstate", () => exitFocus(true));
+  document.addEventListener("fullscreenchange", () => { if (!document.fullscreenElement && usedFS) { usedFS = false; exitFocus(); } });
+  addEventListener("keydown", e => { if (e.key === "Escape") exitFocus(); });
 
   /* ---------- Rendu ---------- */
   function puff() {
@@ -279,5 +310,5 @@
 
   loadMission(mi);
   render();
-  window.BMSim = { S, MISSIONS, loadMission }; // debug
+  window.BMSim = { S, MISSIONS, loadMission, enterFocus, exitFocus }; // debug
 })();
